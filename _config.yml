@@ -65,11 +65,8 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: next
 avatar: /uploads/night-street.jpg # 头像
-duoshuo_shortname: jimhoo # 多说评论
-duoshuo_share: true # 多说分享
-# 多说热评文章 true 或者 false
+
 duoshuo_hotartical: false
-baidu_analytics: c5882c7e5623a6521e635703ae767999
 
 # Local Search
 search:
