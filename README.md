@@ -1,2 +1,2 @@
 Blog  
-Using theme Next.
+Using the theme Next.
