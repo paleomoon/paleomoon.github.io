@@ -1,2 +1,2 @@
-blog
+Blog  
 Using theme Next.
