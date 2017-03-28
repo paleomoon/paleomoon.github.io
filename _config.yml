@@ -8,7 +8,7 @@ subtitle: Stay Hungry,Stay Foolish.
 description: On The Way
 author: Jim Hoo
 language: zh-Hans
-timezone:
+timezone: Asia/Shanghai #时区
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'

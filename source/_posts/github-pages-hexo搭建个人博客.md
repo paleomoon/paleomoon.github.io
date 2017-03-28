@@ -7,9 +7,9 @@ categories: 技术
 ## 前言
 一直想找个简洁美观又方便（支持markdown）的地方写点东西，试过博客园，CSDN，还有各种笔记，都感觉不怎么舒服。后来发现很多人推荐用github pages+hexo搭建个人博客，果然一开始见到给我的感觉就是：惊艳。于是折腾起来，其间也遇到的各种问题，最后花了一天时间，终于完成，包括各种自定义效果和第三方服务，都尝试了一遍。最后完成打开网站的那一刻，成就感爆棚有木有！<!-- more --> 其实也没有，因为终究还是简单的使用，要是自己能完完全全做出个博客网站那才真的有成就感。好了，搭建博客的具体步骤就不再总结，网上很多，文末给出两篇觉得比较好的，这里总结一下一些需要注意的地方。
 ## 写博客基本流程
-`hexo new [layout] <title>`,layout有post、page 和 draft。  
+`hexo new [layout] <title>`,layout有post、page 和 draft。也可以自己在scaffolds下新建有一个layout的md文件，使用自定义layout. 
 在source/_posts下打开对应文件。  
-文章头部添加信息，写文章。** 注意引号后面有空格 **  
+文章头部添加信息，写文章。** 注意引号后面有空格 **  可以建立自己的文章模板，避免每次都要输入新的属性，修改scaffolds下的post.md即可.  
 `hexo generate`  
 `hexo server` http://localhost:4000 预览  
 `hexo deploy` 部署
@@ -31,9 +31,9 @@ sources/tags/index.md,修改type: "tags",comments: false
 ## 图片  
 对于本地图片，需要在source目录下面新建一个目录images，然后把图片放到目录中.  
 `![这是一张图片](/images/fens.me.png)`  
-七牛图床下次有时间再研究
+由于github有300M存储空间限制，所以最好使用七牛云图床生成图片外链。
 ## 站点统计
-使用不蒜子，发现首页底部访问量显示错误，故只设置了显示文章阅读数。
+使用不蒜子。
 ## RSS订阅
 ## 远程无法更新页面
 由于之前胡乱操作导致本地目录混乱，于是整理，不小心删除.deploy_git下的.git,导致github远程无法更新静态页面。还原即可。

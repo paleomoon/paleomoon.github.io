@@ -17,7 +17,7 @@ git add a.txt b.cpp
 
 #把所有文件修改添加到暂存区  
 git add  .  
-git add --all  
+git add --all #两横杠  
 
 #把暂存区的所有内容提交到当前分支  
 git commit  -m "backup_message"  
@@ -74,6 +74,10 @@ git merge branch_name
 
 #删除分支  
 git branch -d branch_name  
+  
+#删除远程分支,第一种方法相当于推送本地空分支到远程  
+git push origin :remote_branch_name  
+git push origin --delete remote_branch_name  
 
 #非fast forward模式合并，保留历史分支合并信息  
 git merge --no-ff -m "backup_message" branch_name  
