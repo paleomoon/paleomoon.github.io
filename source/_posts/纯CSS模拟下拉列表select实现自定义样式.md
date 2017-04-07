@@ -117,6 +117,13 @@ radio-container {
     opacity: 0;
     transition: 0s; 
 }
+```
+
+> We hide the inputs, we could just use display : none, but that would not work in browsers (some mobile ones) where clicking the label does not focus the associated input.  
+
+`display:none`在移动设备兼容性不好，改用绝对定位。  
+
+```css
 .radio-options input {
     position: absolute;
     top: 0;
@@ -171,13 +178,13 @@ radio checked 但鼠标没触发时
 
 我们看到，使用纯 css 代码很多，比较复杂。在实际项目中还是使用js或一些插件较好，否则有点得不偿失。  
 
-[预览地址](https://jimhoo.github.io/LearningFrontEnd/css/index.html)  
-[代码地址](https://github.com/JimHoo/LearningFrontEnd/tree/master/css)  
+[预览地址](https://jimhoo.github.io/LearningFrontEnd/css/custom-select/index.html)  
+[代码地址](https://github.com/JimHoo/LearningFrontEnd/tree/master/css/custom-select)  
 
 参考：  
 [Css-only Alternative to the Select Element](https://pepsized.com/css-only-alternative-to-the-select-element/?utm_source=tuicool&utm_medium=referral)  
 [How to style a select dropdown with CSS only without JavaScript - stackoverflow](http://stackoverflow.com/questions/1895476/how-to-style-a-select-dropdown-with-css-only-without-javascript)  
-[浅谈CSS自定义下拉列表的样式](http://blog.csdn.net/zhouziyu2011/article/details/53729732)
+[浅谈CSS自定义下拉列表的样式 - CSDN](http://blog.csdn.net/zhouziyu2011/article/details/53729732)
 
 
 
