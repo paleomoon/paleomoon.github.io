@@ -1,2 +1,2 @@
-## JimHoo.github.io  
-Blog using Hexo with theme Next.
+# [JimHoo.github.io](https://jimhoo.github.io/)  
+Blog recording some technical experience and thoughts of life,built with Hexo and theme Next.
