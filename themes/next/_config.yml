@@ -283,7 +283,7 @@ mathjax:
 baidu_analytics: c5882c7e5623a6521e635703ae767999
 
 # Duoshuo ShortName
-duoshuo_shortname: jimhoo
+#duoshuo_shortname: jimhoo
 
 # Disqus
 #disqus_shortname:
@@ -292,7 +292,7 @@ duoshuo_shortname: jimhoo
 #hypercomments_id:
 
 # Gentie productKey
-#gentie_productKey:
+gentie_productKey: 876263b69d9647268b9040ad8f9e7d59
 
 # Support for youyan comments system.
 # You can get your uid from http://www.uyan.cc
@@ -315,7 +315,7 @@ duoshuo_shortname: jimhoo
 #add_this_id:
 
 # Share
-duoshuo_share: true
+# duoshuo_share: true
 
 # Google Webmaster tools verification setting
 # See: https://www.google.com/webmasters/
@@ -338,11 +338,11 @@ duoshuo_share: true
 # Make duoshuo show UA
 # user_id must NOT be null when admin_enable is true!
 # you can visit http://dev.duoshuo.com get duoshuo user id.
-duoshuo_info:
-  ua_enable: true
-  admin_enable: false
-  user_id: 0
-  #admin_nickname: Author
+# duoshuo_info:
+# ua_enable: true
+# admin_enable: false
+# user_id: 0
+# #admin_nickname: Author
 
 
 # Facebook SDK Support.
