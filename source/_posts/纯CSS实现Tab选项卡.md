@@ -49,8 +49,8 @@ css
 }
 ```
 ### DEMO
-[预览地址](https://jimhoo.github.io/LearningFrontEnd/css/tab/tab1-1.html)  
-[代码地址](https://github.com/JimHoo/LearningFrontEnd/tree/master/css/tab/tab1-1.html)  
+[预览地址](https://paleomoon.github.io/LearningFrontEnd/css/tab/tab1-1.html)  
+[代码地址](https://github.com/paleomoon/LearningFrontEnd/tree/master/css/tab/tab1-1.html)  
 ## 锚点 + :target
 ### 原理
 可以通过点击锚链接触发指定元素的伪类:target，因此，可以将Tab页面内容隐藏，在:target伪类中设置Tab页面可见。这样在缺少CSS时依然可以清晰的阅读内容。  
@@ -80,8 +80,8 @@ css
 }
 ```
 ### DEMO
-[预览地址](https://jimhoo.github.io/LearningFrontEnd/css/tab/tab1-2.html)  
-[代码地址](https://github.com/JimHoo/LearningFrontEnd/tree/master/css/tab/tab1-2.html)  
+[预览地址](https://paleomoon.github.io/LearningFrontEnd/css/tab/tab1-2.html)  
+[代码地址](https://github.com/paleomoon/LearningFrontEnd/tree/master/css/tab/tab1-2.html)  
 # 通过radio及:checked伪类实现
 ## 原理
 隐藏所有Tab内容及input,显示label并关联相应input，当点击相应label选中radio,通过radio的:checked伪类显示相应Tab内容。  
@@ -167,8 +167,8 @@ css
 ## 效果
 ![效果](http://omcbb8o2a.bkt.clouddn.com/image/github/LearningFrontEnd/css/tab/tab2-style.jpg)
 ## DEMO
-[预览地址](https://jimhoo.github.io/LearningFrontEnd/css/tab/tab2.html)  
-[代码地址](https://github.com/JimHoo/LearningFrontEnd/tree/master/css/tab/tab2.html)  
+[预览地址](https://paleomoon.github.io/LearningFrontEnd/css/tab/tab2.html)  
+[代码地址](https://github.com/paleomoon/LearningFrontEnd/tree/master/css/tab/tab2.html)  
 
 # 参考
 [css实现tab切换 - CSDN](http://blog.csdn.net/jvid_sky/article/details/53260616)  

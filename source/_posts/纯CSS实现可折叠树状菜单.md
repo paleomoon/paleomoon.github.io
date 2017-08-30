@@ -58,8 +58,8 @@ HTML结构
 经测试兼容 IE10 、chrome 和现代移动浏览器。  
 
 ## DEMO
-[预览地址](https://jimhoo.github.io/LearningFrontEnd/css/tree-list/index.html)  
-[代码地址](https://github.com/JimHoo/LearningFrontEnd/tree/master/css/tree-list)  
+[预览地址](https://paleomoon.github.io/LearningFrontEnd/css/tree-list/index.html)  
+[代码地址](https://github.com/paleomoon/LearningFrontEnd/tree/master/css/tree-list)  
 
 ## 参考
 [纯CSS打造可折叠树状菜单 - CSDN](http://blog.csdn.net/woshisap/article/details/6679977)  

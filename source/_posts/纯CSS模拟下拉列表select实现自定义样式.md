@@ -178,8 +178,8 @@ radio checked 但鼠标没触发时
 
 我们看到，使用纯 css 代码很多，比较复杂。在实际项目中还是使用js或一些插件较好，否则有点得不偿失。  
 
-[预览地址](https://jimhoo.github.io/LearningFrontEnd/css/custom-select/index.html)  
-[代码地址](https://github.com/JimHoo/LearningFrontEnd/tree/master/css/custom-select)  
+[预览地址](https://paleomoon.github.io/LearningFrontEnd/css/custom-select/index.html)  
+[代码地址](https://github.com/paleomoon/LearningFrontEnd/tree/master/css/custom-select)  
 
 参考：  
 [Css-only Alternative to the Select Element](https://pepsized.com/css-only-alternative-to-the-select-element/?utm_source=tuicool&utm_medium=referral)  

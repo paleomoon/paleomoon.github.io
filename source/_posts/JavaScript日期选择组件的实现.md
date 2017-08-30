@@ -65,8 +65,8 @@ var curMonthDayNum = curMonthLastDay.getDate();
 组件的容器类名可以取一个独特且比较长的名字，避免与外界产生冲突：`ui-datepicker-wrapper`，所有组件内部元素名称通过级联选择器包含在这个选择器内。
 
 # 代码
-[预览地址](https://jimhoo.github.io/components/DatePicker/index.html)  
-[代码地址](https://github.com/JimHoo/components/tree/master/DatePicker)  
+[预览地址](https://paleomoon.github.io/components/DatePicker/index.html)  
+[代码地址](https://github.com/paleomoon/components/tree/master/DatePicker)  
 
 # 参考
 [DatePicker组件开发 - 慕课网](http://www.imooc.com/learn/820)
