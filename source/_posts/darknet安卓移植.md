@@ -134,7 +134,7 @@ private String getPathFromAssets(String assetsFileName){
 
 ### 总结
 
-其实也比较简单，主要参考以下两项目，感谢作者大佬，嘻嘻。
+其实也比较简单，主要就写了个Cmakelists.txt。参考以下两项目，感谢作者大佬。
 
 ### 参考
 
