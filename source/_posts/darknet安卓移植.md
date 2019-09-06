@@ -140,4 +140,4 @@ private String getPathFromAssets(String assetsFileName){
 
 [安卓应用层](https://github.com/yuace/yolov2-Tiny-NCNN-Android-demo)
 
-[darknet2ncnn](https://github.com/yuace/yolov2-Tiny-NCNN-Android-demo)
+[darknet2ncnn](https://github.com/xiangweizeng/darknet2ncnn/)
