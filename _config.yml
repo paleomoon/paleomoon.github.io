@@ -5,7 +5,7 @@
 # Site
 title: paleomoon's blog
 subtitle: Stay Hungry,Stay Foolish.
-description: 学习图像处理和计算机视觉，记录工作和生活。
+description: 
 keywords:
 author: paleomoon
 language: zh-CN
@@ -13,7 +13,7 @@ timezone: Asia/Shanghai #时区
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://paleomoon.github.io/
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -81,3 +81,10 @@ deploy:
   type: git
   repo: git@github.com:paleomoon/paleomoon.github.io.git
   branch: master
+
+# Local Search
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
