@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.jpg?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.jpg?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.jpg?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.jpg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="darknet2ncnn安卓移植项目使用的版本是老版darknet2ncnn，之后作者适配到了ncnn最新版。">
+<meta name="keywords" content="深度学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="darknet安卓移植">
+<meta property="og:url" content="http://yoursite.com/2019/09/06/darknet安卓移植/index.html">
+<meta property="og:site_name" content="paleomoon&#39;s blog">
+<meta property="og:description" content="darknet2ncnn安卓移植项目使用的版本是老版darknet2ncnn，之后作者适配到了ncnn最新版。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-06T14:34:31.197Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="darknet安卓移植">
+<meta name="twitter:description" content="darknet2ncnn安卓移植项目使用的版本是老版darknet2ncnn，之后作者适配到了ncnn最新版。">
+  <link rel="canonical" href="http://yoursite.com/2019/09/06/darknet安卓移植/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>darknet安卓移植 | paleomoon's blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paleomoon's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">Stay Hungry,Stay Foolish.</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/06/darknet安卓移植/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paleomoon">
+      <meta itemprop="description" content="学习图像处理和计算机视觉，记录工作和生活。">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paleomoon's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">darknet安卓移植
+
+          
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-06 19:09:36 / 修改时间：22:34:31" itemprop="dateCreated datePublished" datetime="2019-09-06T19:09:36+08:00">2019-09-06</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/09/06/darknet安卓移植/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/09/06/darknet安卓移植/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="darknet2ncnn安卓移植"><a href="#darknet2ncnn安卓移植" class="headerlink" title="darknet2ncnn安卓移植"></a>darknet2ncnn安卓移植</h2><p>项目使用的版本是<a href="https://github.com/xiangweizeng/darknet2ncnn/tree/72696c6efc3899d63463be2e9faf4e5b246569ff" target="_blank" rel="noopener">老版darknet2ncnn</a>，之后作者<a href="https://github.com/xiangweizeng/darknet2ncnn/" target="_blank" rel="noopener">适配到了ncnn最新版</a>。</p>
+<a id="more"></a>
+
+<h3 id="编译安卓版ncnn"><a href="#编译安卓版ncnn" class="headerlink" title="编译安卓版ncnn"></a>编译安卓版ncnn</h3><p>在linux下编译，查看官方教程即可。注意使用与android studio相同版本的ndk。设置android studio ndk：修改local.properties，ndk.dir=D:\softback\Android\android-ndk-r15c</p>
+<h3 id="添加相关源文件"><a href="#添加相关源文件" class="headerlink" title="添加相关源文件"></a>添加相关源文件</h3><p>将darknet、ncnn、darknet2ncnn相关源文件和头文件按目录添加到cpp目录下，目录结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">├─darknet</span><br><span class="line">│  ├─include</span><br><span class="line">│  └─src</span><br><span class="line">├─darknet2ncnn</span><br><span class="line">│  ├─include</span><br><span class="line">│  └─src</span><br><span class="line">└─ncnn</span><br><span class="line">    ├─include</span><br><span class="line">    └─src</span><br></pre></td></tr></table></figure>
+
+<p>darknet源码报错：<code>compare.c:17:13 error: initializing &#39;network&#39; (aka &#39;struct network&#39;) with an expression of incompatible type &#39;network *&#39; (aka &#39;struct network *&#39;); dereference with *.</code>修改compare.c，多处对应的指针类型和引用改一下就OK。</p>
+<p>在darknet和darknet2ncnn package下new package，添加相关源码，但编译后android studio中该源码目录会显示在cpp目录下，不清楚啥原因，不过不影响编译。</p>
+<h3 id="编写Cmakelists-txt"><a href="#编写Cmakelists-txt" class="headerlink" title="编写Cmakelists.txt"></a>编写Cmakelists.txt</h3><p>这个是重点，很多问题就是没有写好Cmakelists.txt引起的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION 2.8.10)</span><br><span class="line"></span><br><span class="line">set(CMAKE_BUILD_TYPE RELEASE)</span><br><span class="line"></span><br><span class="line">set(libs &quot;$&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs&quot;)</span><br><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/darknet2ncnn/include</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/ncnn/include</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/darknet/include</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/darknet2ncnn/src</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/ncnn/src)</span><br><span class="line"></span><br><span class="line">set(CMAKE_STATIC_LINKER_FLAGS &quot;-lm  -pthread -fopenmp -lstdc++&quot;)</span><br><span class="line">set(CMAKE_C_FLAGS  &quot;$&#123;CMAKE_C_FLAGS&#125; -Ofast -Wno-unused-result  -Wfatal-errors -fPIC -fno-rtti -fno-exceptions&quot;)</span><br><span class="line">set(CMAKE_CXX_FLAGS  &quot;$&#123;CMAKE_CXX_FLAGS&#125; -std=c++11 -Ofast -Wno-unused-result  -Wfatal-errors -fPIC -fno-rtti -fno-exceptions&quot;)</span><br><span class="line"></span><br><span class="line">add_library (libncnn STATIC IMPORTED)</span><br><span class="line">set_target_properties(libncnn PROPERTIES IMPORTED_LOCATION $&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs/armeabi-v7a/libncnn.a)</span><br><span class="line"></span><br><span class="line">file(GLOB_RECURSE darknet_src $&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/darknet/src/*.c)</span><br><span class="line"></span><br><span class="line">set(darknet2ncnn_dir $&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/darknet2ncnn/src)</span><br><span class="line">set(darknet2ncnn_src $&#123;darknet2ncnn_dir&#125;/layer/darknet_activation.cpp</span><br><span class="line">    $&#123;darknet2ncnn_dir&#125;/layer/darknet_shortcut.cpp</span><br><span class="line">    $&#123;darknet2ncnn_dir&#125;/layer/yolov1_detection.cpp</span><br><span class="line">    $&#123;darknet2ncnn_dir&#125;/layer/yolov3_detection.cpp</span><br><span class="line">    $&#123;darknet2ncnn_dir&#125;/object_detection.cpp</span><br><span class="line">    $&#123;darknet2ncnn_dir&#125;/register_darknet.cpp</span><br><span class="line">    $&#123;darknet2ncnn_dir&#125;/darknet2ncnn.cpp)</span><br><span class="line"></span><br><span class="line">set(ncnn_src $&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/ncnn/src)</span><br><span class="line"></span><br><span class="line">set(lib_src $&#123;darknet_src&#125; $&#123;darknet2ncnn_src&#125; $&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/yolov3-tiny-jni.cpp)</span><br><span class="line"></span><br><span class="line">add_library( # Sets the name of the library.</span><br><span class="line">        yolov3_tiny_jni</span><br><span class="line"></span><br><span class="line">        # Sets the library as a shared library.</span><br><span class="line">        SHARED</span><br><span class="line"></span><br><span class="line">        # Provides a relative path to your source file(s).</span><br><span class="line">        $&#123;lib_src&#125;)</span><br><span class="line"></span><br><span class="line">find_library( # Sets the name of the path variable.</span><br><span class="line">        log-lib</span><br><span class="line"></span><br><span class="line">        # Specifies the name of the NDK library that</span><br><span class="line">        # you want CMake to locate.</span><br><span class="line">        log)</span><br><span class="line"></span><br><span class="line">target_link_libraries( # Specifies the target library.</span><br><span class="line">        yolov3_tiny_jni</span><br><span class="line">        libncnn</span><br><span class="line">        jnigraphics</span><br><span class="line"></span><br><span class="line">        # Links the target library to the log library</span><br><span class="line">        # included in the NDK.</span><br><span class="line">        $&#123;log-lib&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="错误解决"><a href="#错误解决" class="headerlink" title="错误解决"></a>错误解决</h3><p>报错：undefined reference to ‘typeinfo for ncnn::Layer’，这个在arm-linux交叉编译时遇到过，添加-fno-rtti编译选项即可。</p>
+<p>报错：fatal error: use of undeclared identifier ‘nullptr’，添加-std=c++11编译选项即可。</p>
+<p>make project编译成功，so生成位置：app\build\intermediates\cmake\debug\obj\armeabi-v7a\</p>
+<p>build apk报错：Cause: org.jetbrains.plugins.gradle.tooling.util.ModuleComponentIdentifierImpl.getModuleIdentifier()Lorg/gradle/api/artifacts/ModuleIdentifier; 更新android studio即可.</p>
+<p>ex.extract返回-100，一般是没找到目标，这里有两种可能，一种是模型正确检测正确，测试图片本来就没目标，另一种情况就是模型有问题，不能正常检测到我们的目标。我反复检查了测试图片和模型都没问题，最后发现还是加载模型错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">private String getPathFromAssets(String assetsFileName)&#123;</span><br><span class="line">    File f = new File(getCacheDir()+&quot;/&quot;+assetsFileName);</span><br><span class="line">    if (!f.exists())</span><br><span class="line">        try &#123;</span><br><span class="line">        InputStream is = getAssets().open(assetsFileName);</span><br><span class="line">        int size = is.available();</span><br><span class="line">        byte[] buffer = new byte[size];</span><br><span class="line">        is.read(buffer);</span><br><span class="line">        is.close();</span><br><span class="line">        FileOutputStream fos = new FileOutputStream(f);</span><br><span class="line">        fos.write(buffer);</span><br><span class="line">        fos.close();</span><br><span class="line">    &#125; catch (Exception e) &#123; throw new RuntimeException(e); &#125;</span><br><span class="line">    return f.getPath();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之前的模型已经加载到缓存中了，后来我更换过一次模型，但是缓存没删除，还是之前的模型，所以一直检测不到目标，将<code>if (!f.exists())</code>注释掉，每次初始化都重新写入缓存，最后成功检测到目标。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其实也比较简单，主要就写了个Cmakelists.txt。参考以下两项目，感谢作者大佬。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/yuace/yolov2-Tiny-NCNN-Android-demo" target="_blank" rel="noopener">安卓应用层</a></p>
+<p><a href="https://github.com/xiangweizeng/darknet2ncnn/" target="_blank" rel="noopener">darknet2ncnn</a></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/07/17/安卓开发板绕过usb权限对话框/" rel="next" title="安卓开发板绕过usb权限对话框">
+                  <i class="fa fa-chevron-left"></i> 安卓开发板绕过usb权限对话框
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#darknet2ncnn安卓移植"><span class="nav-number">1.</span> <span class="nav-text">darknet2ncnn安卓移植</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译安卓版ncnn"><span class="nav-number">1.1.</span> <span class="nav-text">编译安卓版ncnn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加相关源文件"><span class="nav-number">1.2.</span> <span class="nav-text">添加相关源文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写Cmakelists-txt"><span class="nav-number">1.3.</span> <span class="nav-text">编写Cmakelists.txt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误解决"><span class="nav-number">1.4.</span> <span class="nav-text">错误解决</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">1.6.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">paleomoon</p>
+  <div class="site-description" itemprop="description">学习图像处理和计算机视觉，记录工作和生活。</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/paleomoon" title="GitHub &rarr; https://github.com/paleomoon" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:huge909@gmail.com" title="E-Mail &rarr; mailto:huge909@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paleomoon</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'e0uzCIdjXHRpcDHiAYNtseNO-MdYXbMMI',
+    appKey: 'ImKrAbfQI2u4FH1j9TEYRyVh',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

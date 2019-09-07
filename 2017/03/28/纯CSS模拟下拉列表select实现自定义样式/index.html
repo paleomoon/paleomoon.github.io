@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.jpg?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.jpg?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.jpg?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.jpg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="下拉列表 select 是一个 bom 元素，因此要美化它的时候仅仅依靠 css 无法实现。这里有两种方案：">
+<meta name="keywords" content="CSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="纯CSS模拟下拉列表select实现自定义样式">
+<meta property="og:url" content="http://yoursite.com/2017/03/28/纯CSS模拟下拉列表select实现自定义样式/index.html">
+<meta property="og:site_name" content="paleomoon&#39;s blog">
+<meta property="og:description" content="下拉列表 select 是一个 bom 元素，因此要美化它的时候仅仅依靠 css 无法实现。这里有两种方案：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://omcbb8o2a.bkt.clouddn.com/image/github-pages/cs_select.JPG">
+<meta property="og:updated_time" content="2017-08-30T15:25:03.727Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="纯CSS模拟下拉列表select实现自定义样式">
+<meta name="twitter:description" content="下拉列表 select 是一个 bom 元素，因此要美化它的时候仅仅依靠 css 无法实现。这里有两种方案：">
+<meta name="twitter:image" content="http://omcbb8o2a.bkt.clouddn.com/image/github-pages/cs_select.JPG">
+  <link rel="canonical" href="http://yoursite.com/2017/03/28/纯CSS模拟下拉列表select实现自定义样式/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>纯CSS模拟下拉列表select实现自定义样式 | paleomoon's blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paleomoon's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">Stay Hungry,Stay Foolish.</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/28/纯CSS模拟下拉列表select实现自定义样式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paleomoon">
+      <meta itemprop="description" content="学习图像处理和计算机视觉，记录工作和生活。">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paleomoon's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">纯CSS模拟下拉列表select实现自定义样式
+
+          
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2017-03-28 22:05:34" itemprop="dateCreated datePublished" datetime="2017-03-28T22:05:34+08:00">2017-03-28</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2017-08-30 23:25:03" itemprop="dateModified" datetime="2017-08-30T23:25:03+08:00">2017-08-30</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2017/03/28/纯CSS模拟下拉列表select实现自定义样式/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2017/03/28/纯CSS模拟下拉列表select实现自定义样式/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>下拉列表 select 是一个 bom 元素，因此要美化它的时候仅仅依靠 css 无法实现。这里有两种方案：</p>
+<a id="more"></a>  
+<h2 id="通过覆盖-select-元素来实现"><a href="#通过覆盖-select-元素来实现" class="headerlink" title="通过覆盖 select 元素来实现"></a>通过覆盖 select 元素来实现</h2><p>原理：<br>将默认的下拉列表样式清除，自定义样式，并添加一张向右对齐的小箭头图片。  </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">option</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#be4e48</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">select</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">236px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">36px</span>;</span><br><span class="line">    <span class="comment">/*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/</span></span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#be4e48</span>;</span><br><span class="line">    <span class="comment">/*将默认的select选择框样式清除*/</span></span><br><span class="line">    <span class="attribute">appearance</span>:none;</span><br><span class="line">    <span class="attribute">-moz-appearance</span>:none;</span><br><span class="line">    <span class="attribute">-webkit-appearance</span>:none;</span><br><span class="line">    <span class="comment">/*在选择框的最右侧中间显示小箭头图片*/</span></span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#fff</span> <span class="built_in">url</span>(right_arrow.png) no-repeat right center;</span><br><span class="line">    <span class="attribute">padding-right</span>: <span class="number">14px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*清除ie的默认选择框样式清除，隐藏下拉箭头*/</span></span><br><span class="line"><span class="selector-tag">select</span><span class="selector-pseudo">::-ms-expand</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: none; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>缺点：option 样式无法修改，包括宽高，这个真的无解。</p>
+<h2 id="使用-radio-模拟下拉列表"><a href="#使用-radio-模拟下拉列表" class="headerlink" title="使用 radio 模拟下拉列表"></a>使用 radio 模拟下拉列表</h2><p>网上找到的一篇博客，原理很简单但对于我这样的初学者实现起来也是很麻烦。大致理解了并进行了部分修改，有点乱。  </p>
+<p>效果：<br><img src="http://omcbb8o2a.bkt.clouddn.com/image/github-pages/cs_select.JPG" alt="效果">  </p>
+<p>原理：</p>
+<ul>
+<li>将所有 li 使用绝对定位置于 div 触发器下,设置 z-index 使 li 被遮挡，</li>
+<li>当鼠标移上触发 hover 选择器，这时对 li 使用相对定位回到正常文档流，同时父元素高度随之增加，呈现的便是展开的 select 样式。</li>
+<li>当鼠标点击选项，实际上是点击 radio 对应的 label,这样 radio 便被选中，通过 input:checked 选择器将 label 的 z-index 增大。</li>
+<li>鼠标移出后各元素位置回到最初状态，显示的是 label 选项。</li>
+<li>radio 自始至终不可见。  </li>
+</ul>
+<p>1.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">fieldset</span> <span class="attr">class</span>=<span class="string">"radio-container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"radio-options"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"toggle"</span>&gt;</span>城市<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"city"</span> <span class="attr">id</span>=<span class="string">"BeiJing"</span> <span class="attr">value</span>=<span class="string">"BeiJing"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"BeiJing"</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> &gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>北京<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"city"</span> <span class="attr">id</span>=<span class="string">"ShangHai"</span> <span class="attr">value</span>=<span class="string">"ShangHai"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"ShangHai"</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> &gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>上海<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"city"</span> <span class="attr">id</span>=<span class="string">"ShenZhen"</span> <span class="attr">value</span>=<span class="string">"ShenZhen"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"ShenZhen"</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> &gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>深圳<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"city"</span> <span class="attr">id</span>=<span class="string">"NewYork"</span> <span class="attr">value</span>=<span class="string">"NewYork"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"NewYork"</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> &gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>纽约<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">              </span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">fieldset</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2.css<br>这里省略了一些 css 代码,完整的可在最后的 github 链接查看</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">radio-container</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">4em</span>; <span class="comment">/* 3em (being the max-height of the inner container) + 1em ("margin") */</span></span><br><span class="line"> &#125;</span><br><span class="line"><span class="selector-class">.radio-container</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">9999</span>; </span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.radio-options</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">max-height</span>: <span class="number">3em</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">    <span class="attribute">transition</span>: <span class="number">0.7s</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.radio-options</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attribute">max-height</span>: <span class="number">100em</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.radio-options</span> <span class="selector-class">.toggle</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">cursor</span>: pointer;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0.75em</span>;</span><br><span class="line">    <span class="attribute">background</span>: darkgreen;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">10px</span>;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">1</span>; </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* li are stacked at the same position as .toggle, only .toggle is visible */</span></span><br><span class="line">  <span class="selector-class">.radio-options</span> <span class="selector-tag">li</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.radio-options</span> <span class="selector-tag">label</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">transition</span>: <span class="number">0s</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>We hide the inputs, we could just use display : none, but that would not work in browsers (some mobile ones) where clicking the label does not focus the associated input.  </p>
+</blockquote>
+<p><code>display:none</code>在移动设备兼容性不好，改用绝对定位。  </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.radio-options</span> <span class="selector-tag">input</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">3em</span>;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">z-index</span>:<span class="number">1</span>;</span><br><span class="line">    <span class="attribute">cursor</span>: pointer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.鼠标移上时</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* li elements have a normal flow within the .radio-options container */</span></span><br><span class="line"><span class="selector-class">.radio-options</span><span class="selector-pseudo">:hover</span> <span class="selector-tag">li</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative; </span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.radio-options</span><span class="selector-pseudo">:hover</span> <span class="selector-tag">label</span> &#123;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">transition</span>: <span class="number">0.5s</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4.选中时<br>radio checked 但鼠标没触发时</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.radio-options</span> <span class="selector-tag">input</span><span class="selector-pseudo">:checked</span> ~ <span class="selector-tag">label</span> &#123;</span><br><span class="line">   <span class="attribute">position</span>: absolute;</span><br><span class="line">   <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">   <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">   <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">   <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line"><span class="comment">/* is above the .toggle so is visible */</span></span><br><span class="line">   <span class="attribute">z-index</span>: <span class="number">2</span>;</span><br><span class="line"><span class="comment">/* has tha same styles as .toggle */</span></span><br><span class="line">   <span class="attribute">padding</span>: <span class="number">0.75em</span>;</span><br><span class="line">   <span class="attribute">background</span>: darkgreen;</span><br><span class="line">   <span class="attribute">border-radius</span>: <span class="number">10px</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>鼠标移上时</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.radio-options</span><span class="selector-pseudo">:hover</span> <span class="selector-tag">input</span><span class="selector-pseudo">:checked</span> ~ <span class="selector-tag">label</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: static;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上就是纯 css 实现自定义下拉列表的方法，经测试兼容 IE10 和 chrome。移动浏览器和 IE8 的兼容性可以参考原文。  </p>
+<p>缺点：<br>选中选项后无法自动收起，必须鼠标移出后才可以。因为 css 没有父选择器，触发 checked 选择器后无法操作 li,要解决只能借助js了。  </p>
+<p>我们看到，使用纯 css 代码很多，比较复杂。在实际项目中还是使用js或一些插件较好，否则有点得不偿失。  </p>
+<p><a href="https://paleomoon.github.io/LearningFrontEnd/css/custom-select/index.html" target="_blank" rel="noopener">预览地址</a><br><a href="https://github.com/paleomoon/LearningFrontEnd/tree/master/css/custom-select" target="_blank" rel="noopener">代码地址</a>  </p>
+<p>参考：<br><a href="https://pepsized.com/css-only-alternative-to-the-select-element/?utm_source=tuicool&utm_medium=referral" target="_blank" rel="noopener">Css-only Alternative to the Select Element</a><br><a href="http://stackoverflow.com/questions/1895476/how-to-style-a-select-dropdown-with-css-only-without-javascript" target="_blank" rel="noopener">How to style a select dropdown with CSS only without JavaScript - stackoverflow</a><br><a href="http://blog.csdn.net/zhouziyu2011/article/details/53729732" target="_blank" rel="noopener">浅谈CSS自定义下拉列表的样式 - CSDN</a></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/CSS/" rel="tag"># CSS</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2017/02/26/git使用总结/" rel="next" title="git使用总结">
+                  <i class="fa fa-chevron-left"></i> git使用总结
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2017/04/07/纯CSS实现可折叠树状菜单/" rel="prev" title="纯CSS实现可折叠树状菜单">
+                  纯CSS实现可折叠树状菜单 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过覆盖-select-元素来实现"><span class="nav-number">1.</span> <span class="nav-text">通过覆盖 select 元素来实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-radio-模拟下拉列表"><span class="nav-number">2.</span> <span class="nav-text">使用 radio 模拟下拉列表</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">paleomoon</p>
+  <div class="site-description" itemprop="description">学习图像处理和计算机视觉，记录工作和生活。</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/paleomoon" title="GitHub &rarr; https://github.com/paleomoon" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:huge909@gmail.com" title="E-Mail &rarr; mailto:huge909@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paleomoon</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'e0uzCIdjXHRpcDHiAYNtseNO-MdYXbMMI',
+    appKey: 'ImKrAbfQI2u4FH1j9TEYRyVh',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

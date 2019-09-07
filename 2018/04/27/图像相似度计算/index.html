@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.jpg?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.jpg?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.jpg?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.jpg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="图像相似度计算主要有两方面应用：  用于计算机视觉中的检测跟踪中目标位置的获取，根据已有模板在图像中找到一个与之最接近的区域。然后一直跟着。已有的一些算法比如BlobTracking，Meanshift，Camshift，粒子滤波等等也都是需要这方面的理论去支撑。 基于图像内容的图像检索，也就是以图搜图。">
+<meta name="keywords" content="算法,图像处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图像相似度计算">
+<meta property="og:url" content="http://yoursite.com/2018/04/27/图像相似度计算/index.html">
+<meta property="og:site_name" content="paleomoon&#39;s blog">
+<meta property="og:description" content="图像相似度计算主要有两方面应用：  用于计算机视觉中的检测跟踪中目标位置的获取，根据已有模板在图像中找到一个与之最接近的区域。然后一直跟着。已有的一些算法比如BlobTracking，Meanshift，Camshift，粒子滤波等等也都是需要这方面的理论去支撑。 基于图像内容的图像检索，也就是以图搜图。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-06T11:11:01.497Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图像相似度计算">
+<meta name="twitter:description" content="图像相似度计算主要有两方面应用：  用于计算机视觉中的检测跟踪中目标位置的获取，根据已有模板在图像中找到一个与之最接近的区域。然后一直跟着。已有的一些算法比如BlobTracking，Meanshift，Camshift，粒子滤波等等也都是需要这方面的理论去支撑。 基于图像内容的图像检索，也就是以图搜图。">
+  <link rel="canonical" href="http://yoursite.com/2018/04/27/图像相似度计算/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>图像相似度计算 | paleomoon's blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paleomoon's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">Stay Hungry,Stay Foolish.</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/27/图像相似度计算/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paleomoon">
+      <meta itemprop="description" content="学习图像处理和计算机视觉，记录工作和生活。">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paleomoon's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">图像相似度计算
+
+          
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-04-27 12:53:42" itemprop="dateCreated datePublished" datetime="2018-04-27T12:53:42+08:00">2018-04-27</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-09-06 19:11:01" itemprop="dateModified" datetime="2019-09-06T19:11:01+08:00">2019-09-06</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/图像处理/" itemprop="url" rel="index"><span itemprop="name">图像处理</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/04/27/图像相似度计算/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/04/27/图像相似度计算/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>图像相似度计算主要有两方面应用：</p>
+<ul>
+<li>用于计算机视觉中的检测跟踪中目标位置的获取，根据已有模板在图像中找到一个与之最接近的区域。然后一直跟着。已有的一些算法比如BlobTracking，Meanshift，Camshift，粒子滤波等等也都是需要这方面的理论去支撑。</li>
+<li>基于图像内容的图像检索，也就是以图搜图。</li>
+</ul>
+<a id="more"></a>
+
+<h1 id="图像相似度计算常见算法"><a href="#图像相似度计算常见算法" class="headerlink" title="图像相似度计算常见算法"></a>图像相似度计算常见算法</h1><ol>
+<li><p>PSNR峰值信噪比</p>
+<p>PSNR是最普遍和使用最为广泛的一种图像客观评价指标，然而它是基于对应像素点间的误差，即基于误差敏感的图像质量评价。</p>
+<p>优点：速度快。</p>
+<p>缺点：由于并未考虑到人眼的视觉特性（人眼对空间频率较低的对比差异敏感度较高，人眼对亮度对比差异的敏感度较色度高，人眼对一个区域的感知结果会受到其周围邻近区域的影响等），因而经常出现评价结果与人的主观感觉不一致的情况。</p>
+</li>
+<li><p>感知哈希算法</p>
+<p>感知哈希算法(perceptual hash algorithm)，它的作用是对每张图像生成一个“指纹”(fingerprint)字符串，然后比较不同图像的指纹。结果越接近，就说明图像越相似。 一般是利用像素点与平均像素值的大小生成一个二进制指纹。</p>
+<p>优点：速度快。</p>
+<p>缺点：受均值影响太大；效果一般。</p>
+</li>
+<li><p>计算特征点</p>
+<p>主要是通过检测如FAST、SURF、SIFT、ORB以及Harris角点等特征点，如果相似特征点较多，则认为两张图片相似。</p>
+<p>优点：具有旋转、尺度等不变性，较准确。</p>
+<p>缺点：计算量大。</p>
+</li>
+<li><p>直方图匹配</p>
+<p>分别计算两幅图像的直方图，然后计算它们的相关系数（实际上也就是两个向量的差异）。</p>
+<p>优点：计算简单。</p>
+<p>缺点：</p>
+<ul>
+<li>直方图反映的只是像素的概率分布，与像素的位置无关，然而两张图片内容差别较大，灰度概率分布差异很小也是有可能的。（可以利用分块进行改进。）</li>
+<li>对光照敏感。</li>
+</ul>
+</li>
+<li><p>数学上的矩阵分解</p>
+<p>图像本身就是一个矩阵，可以依靠数学上矩阵分解的一些知识来获取矩阵中一些代表这个矩阵元素值和分布的一些鲁棒性特征来对图像的相似度进行计算。</p>
+<p>最常用的一般是SVD分解和NMF分解。有人使用SVD+NMF结合取得了不错的效果。</p>
+</li>
+</ol>
+<h1 id="基于局部纹理特征的图像相似度计算"><a href="#基于局部纹理特征的图像相似度计算" class="headerlink" title="基于局部纹理特征的图像相似度计算"></a>基于局部纹理特征的图像相似度计算</h1><p>上述方法基本只能达到粗糙的效果，很多时候两幅整体相似但细节差异较大的图可能判定相似，难以得到精确的结果。</p>
+<p>LBP（Local Binary Pattern，局部二值模式）是一种用来描述图像局部纹理特征的算子；它具有旋转不变性和灰度不变性等显著的优点。</p>
+<p>原始的LBP算子定义为在<code>3*3</code>的窗口内，以窗口中心像素为阈值，将相邻的8个像素的灰度值与其进行比较，若周围像素值大于中心像素值，则该像素 点的位置被标记为1，否则为0。这样，<code>3*3</code>邻域内的8个点经比较可产生8位二进制数（通常转换为十进制数即LBP码，共256种），即得到该窗口中心像 素点的LBP值，并用这个值来反映该区域的纹理信息。</p>
+<p>LBP特征跟位置信息是紧密相关的。直接对两幅图片提取LBP，并进行判别分析的话，会因为“位置没有 对准”而产生很大的误差。可以用分块来解决这个问题。</p>
+<p>对LBP特征向量进行提取的步骤：</p>
+<ol>
+<li>将图片缩小尺寸，去除部分高频和细节；</li>
+<li>将检测窗口划分为若干个小区域（cell）；</li>
+<li>对于每个cell中的一个像素，将相邻的8个像素的灰度值与其进行比较，若周围像素值大于中心像素值，则该像素点的位置被标记为1，否则为0。这样，3*3邻域内的8个点经比较可产生8位二进制数，即得到该窗口中心像素点的LBP值；</li>
+<li>计算每个cell的直方图，即每个数字（假定是十进制数LBP值）出现的频率；然后对该直方图进行归一化处理。</li>
+<li>将得到的每个cell的统计直方图进行连接成为一个特征向量，也就是整幅图的LBP纹理特征向量；</li>
+<li>通过一定的度量方法（如皮尔逊相关系数）比较两张图片的LBP特征向量的相似度。</li>
+</ol>
+<p>上述其实就是基于LBP的人脸识别算法，在图像相似度计算的实际应用中有几点需要注意：</p>
+<ul>
+<li>直接比较周围像素值与中心像素值的大小，可能会太灵敏，可设定一个阈值（一般为1~2），像素差与阈值进行比较。</li>
+<li>图片缩放的大小、子块大小、数量都对结果有着直接的影响，可以根据实际效果选择合适的参数。</li>
+<li>实际应用中发现对缩放后的图片进行<code>3*3</code>的模糊滤波，能实现更好的效果。</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="http://blog.csdn.net/wangyaninglm/article/details/43853435" target="_blank" rel="noopener">OpenCV进行图像相似度对比的几种办法</a></li>
+<li><a href="http://blog.csdn.net/a784763307/article/details/13295693" target="_blank" rel="noopener">图像相似度计算</a></li>
+<li><a href="http://blog.csdn.net/lg1259156776/article/details/47037583" target="_blank" rel="noopener">图像相似度测量与模板匹配总结</a></li>
+<li><a href="http://dataunion.org/20584.html" target="_blank" rel="noopener">图像特征提取三大法宝：HOG特征，LBP特征，Haar特征</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/算法/" rel="tag"># 算法</a>
+            
+              <a href="/tags/图像处理/" rel="tag"># 图像处理</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/03/22/vultr搭建ssr服务器及bbr加速教程/" rel="next" title="vultr搭建ssr服务器及bbr加速教程">
+                  <i class="fa fa-chevron-left"></i> vultr搭建ssr服务器及bbr加速教程
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/06/03/安卓使用zbar扫描二维码/" rel="prev" title="安卓使用zbar扫描二维码">
+                  安卓使用zbar扫描二维码 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#图像相似度计算常见算法"><span class="nav-number">1.</span> <span class="nav-text">图像相似度计算常见算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于局部纹理特征的图像相似度计算"><span class="nav-number">2.</span> <span class="nav-text">基于局部纹理特征的图像相似度计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">paleomoon</p>
+  <div class="site-description" itemprop="description">学习图像处理和计算机视觉，记录工作和生活。</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/paleomoon" title="GitHub &rarr; https://github.com/paleomoon" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:huge909@gmail.com" title="E-Mail &rarr; mailto:huge909@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paleomoon</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'e0uzCIdjXHRpcDHiAYNtseNO-MdYXbMMI',
+    appKey: 'ImKrAbfQI2u4FH1j9TEYRyVh',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.jpg?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.jpg?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.jpg?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.jpg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="实际网页开发中经常要用到各种日期组件，这里通过原生HTML/CSS/JavaScript完成一个日期选择器（datepicker）组件的开发。">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript日期选择组件的实现">
+<meta property="og:url" content="http://yoursite.com/2017/06/19/JavaScript日期选择组件的实现/index.html">
+<meta property="og:site_name" content="paleomoon&#39;s blog">
+<meta property="og:description" content="实际网页开发中经常要用到各种日期组件，这里通过原生HTML/CSS/JavaScript完成一个日期选择器（datepicker）组件的开发。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://omcbb8o2a.bkt.clouddn.com/image/github-pages/datepicker/style.jpg">
+<meta property="og:updated_time" content="2017-08-30T15:24:07.939Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript日期选择组件的实现">
+<meta name="twitter:description" content="实际网页开发中经常要用到各种日期组件，这里通过原生HTML/CSS/JavaScript完成一个日期选择器（datepicker）组件的开发。">
+<meta name="twitter:image" content="http://omcbb8o2a.bkt.clouddn.com/image/github-pages/datepicker/style.jpg">
+  <link rel="canonical" href="http://yoursite.com/2017/06/19/JavaScript日期选择组件的实现/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>JavaScript日期选择组件的实现 | paleomoon's blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paleomoon's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">Stay Hungry,Stay Foolish.</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/19/JavaScript日期选择组件的实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paleomoon">
+      <meta itemprop="description" content="学习图像处理和计算机视觉，记录工作和生活。">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paleomoon's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">JavaScript日期选择组件的实现
+
+          
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2017-06-19 21:06:39" itemprop="dateCreated datePublished" datetime="2017-06-19T21:06:39+08:00">2017-06-19</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2017-08-30 23:24:07" itemprop="dateModified" datetime="2017-08-30T23:24:07+08:00">2017-08-30</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2017/06/19/JavaScript日期选择组件的实现/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2017/06/19/JavaScript日期选择组件的实现/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>实际网页开发中经常要用到各种日期组件，这里通过原生HTML/CSS/JavaScript完成一个日期选择器（datepicker）组件的开发。</p>
+<a id="more"></a>
+<p>效果如下：<br><img src="http://omcbb8o2a.bkt.clouddn.com/image/github-pages/datepicker/style.jpg" alt="效果"></p>
+<p>基本功能：</p>
+<ol>
+<li>点击输入框出现日历。</li>
+<li>点击日期，输入框内容为选择的日期，日历收起。</li>
+<li>点击左右箭头翻月。</li>
+</ol>
+<p>主要工作包括HTML静态结构的编写、日历数据的获取、组件的渲染以及组件事件的处理。 </p>
+<h1 id="HTML结构"><a href="#HTML结构" class="headerlink" title="HTML结构"></a>HTML结构</h1><p>日历部分主要分为两部分：head区域（年月显示和月份切换）、body区域（星期和日期）。而body区域由table布局，星期为thead,日期为tbody。<br>因为一个月最多可能跨越6周，所以tbody为42个单元格。<br>样式编写在此省略。</p>
+<h1 id="日历数据的获取"><a href="#日历数据的获取" class="headerlink" title="日历数据的获取"></a>日历数据的获取</h1><p>获取一个月（日历页面）的所有数据的过程如下：</p>
+<ol>
+<li><p>一个月的天数<br>1/3/5/7/8/10/12月有31天，平年2月28天，闰年2月29天，其余月份30天。可以写一个函数根据年月获取某年某月有多少天。还有一种更简单的方法，本月（month-1）的天数=本月最后一天日期=下月（month）的第0天日期。同理，上月的天数=上月最后一天=本月的第0天。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//下月的第0天</span></span><br><span class="line"><span class="keyword">var</span> curMonthLastDay = <span class="keyword">new</span> <span class="built_in">Date</span>(year, month, <span class="number">0</span>);</span><br><span class="line"><span class="comment">//本月的天数-本月最后一天</span></span><br><span class="line"><span class="keyword">var</span> curMonthDayNum = curMonthLastDay.getDate();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>需要显示的上一月的天数<br>星期按周日到周六排列，那么需 要显示的上一月的天数=本月的第一天的星期数（0-6）。</p>
+</li>
+<li><p>需要显示的下一月的天数<br>需要显示的下一月的天数=42-本月的天数-上月显示的天数。</p>
+</li>
+<li><p>根据以上数据即可获取一个日历页面的数据，保存在一个数组中，为下一步渲染提供数据。</p>
+</li>
+</ol>
+<h1 id="生成TML结构"><a href="#生成TML结构" class="headerlink" title="生成TML结构"></a>生成TML结构</h1><p>日历表格的结构复杂、内容变化频繁，我们采用动态生成DOM元素的方法，最后添加到页面。<br>这一过程也简单，使用字符串拼接标签与上步获得的数据，生成HTML字符串。</p>
+<h1 id="渲染显示"><a href="#渲染显示" class="headerlink" title="渲染显示"></a>渲染显示</h1><p>将日历包含在一个wrapper容器中，将HTML结构添加在wrapper中，最后在body上添加wrapper。</p>
+<h1 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h1><p>因为HTML内容是动态生成与删除，每个表格添加事件太麻烦，因此利用事件冒泡，将点击事件添加到wrapper容器。月份切换同理。</p>
+<h1 id="组件初始化"><a href="#组件初始化" class="headerlink" title="组件初始化"></a>组件初始化</h1><ol>
+<li>定位<br>在使用时，只需要添加一个输入框，输入框可能出现在任何位置，为了让日历固定邻接输入框下方，需要在初始化时通过offsetLeft与offsetTop获取输入框的位置，以此使用绝对定位调整日历容器的位置。</li>
+<li>显示与隐藏<br>使用<code>wrapper.classList.add()</code>与<code>wrapper.classList.remove()</code>添加或移除类名控制日历的显示与隐藏。</li>
+<li>月份切换<br>事件处理函数中获取相应月份的数据，重新渲染显示。</li>
+<li>日期的点击选择<br>要在点击表格元素时获取对应日期，可以获取对应td的innerHtml，但这样当月显示的上月和下月日期获取会有错误。因此，在生成HTML结构时，为每个日期td添加自定义属性，存储准确的日期，通过target.dataset.propName可获取自定义data-propName属性的值。</li>
+<li>上下月日期显示灰色<br>生成HTML内容时为上下月添加控制样式的类即可。</li>
+</ol>
+<h1 id="组件化思想"><a href="#组件化思想" class="headerlink" title="组件化思想"></a>组件化思想</h1><p>为了模块不污染外部环境，将所有JS代码包裹在一个立即执行的匿名函数<code>(function () {})()</code>中，在函数中定义一个对象<code>var datepicker = {};</code>，唯一暴露给外界的对象只有该对象：<code>window.datepicker = datepicker;</code>。<br>组件的容器类名可以取一个独特且比较长的名字，避免与外界产生冲突：<code>ui-datepicker-wrapper</code>，所有组件内部元素名称通过级联选择器包含在这个选择器内。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p><a href="https://paleomoon.github.io/components/DatePicker/index.html" target="_blank" rel="noopener">预览地址</a><br><a href="https://github.com/paleomoon/components/tree/master/DatePicker" target="_blank" rel="noopener">代码地址</a>  </p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.imooc.com/learn/820" target="_blank" rel="noopener">DatePicker组件开发 - 慕课网</a></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2017/04/13/纯CSS实现Tab选项卡/" rel="next" title="纯CSS实现Tab选项卡">
+                  <i class="fa fa-chevron-left"></i> 纯CSS实现Tab选项卡
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2017/09/19/三栏式布局/" rel="prev" title="三栏式布局">
+                  三栏式布局 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML结构"><span class="nav-number">1.</span> <span class="nav-text">HTML结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日历数据的获取"><span class="nav-number">2.</span> <span class="nav-text">日历数据的获取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#生成TML结构"><span class="nav-number">3.</span> <span class="nav-text">生成TML结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#渲染显示"><span class="nav-number">4.</span> <span class="nav-text">渲染显示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事件处理"><span class="nav-number">5.</span> <span class="nav-text">事件处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组件初始化"><span class="nav-number">6.</span> <span class="nav-text">组件初始化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组件化思想"><span class="nav-number">7.</span> <span class="nav-text">组件化思想</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码"><span class="nav-number">8.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">paleomoon</p>
+  <div class="site-description" itemprop="description">学习图像处理和计算机视觉，记录工作和生活。</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/paleomoon" title="GitHub &rarr; https://github.com/paleomoon" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:huge909@gmail.com" title="E-Mail &rarr; mailto:huge909@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paleomoon</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'e0uzCIdjXHRpcDHiAYNtseNO-MdYXbMMI',
+    appKey: 'ImKrAbfQI2u4FH1j9TEYRyVh',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

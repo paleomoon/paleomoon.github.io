@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.jpg?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.jpg?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.jpg?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.jpg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="前言一直想找个简洁美观又方便（支持markdown）的地方写点东西，试过博客园，CSDN，还有各种笔记，都感觉不怎么舒服。后来发现很多人推荐用github pages+hexo搭建个人博客，果然一开始见到给我的感觉就是：惊艳。于是折腾起来，其间也遇到的各种问题，最后花了一天时间，终于完成，包括各种自定义效果和第三方服务，都尝试了一遍。最后完成打开网站的那一刻，成就感爆棚有木有！">
+<meta name="keywords" content="github pages,博客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="github pages+hexo搭建个人博客">
+<meta property="og:url" content="http://yoursite.com/2017/02/26/github-pages-hexo搭建个人博客/index.html">
+<meta property="og:site_name" content="paleomoon&#39;s blog">
+<meta property="og:description" content="前言一直想找个简洁美观又方便（支持markdown）的地方写点东西，试过博客园，CSDN，还有各种笔记，都感觉不怎么舒服。后来发现很多人推荐用github pages+hexo搭建个人博客，果然一开始见到给我的感觉就是：惊艳。于是折腾起来，其间也遇到的各种问题，最后花了一天时间，终于完成，包括各种自定义效果和第三方服务，都尝试了一遍。最后完成打开网站的那一刻，成就感爆棚有木有！">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-03-05T11:45:55.682Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="github pages+hexo搭建个人博客">
+<meta name="twitter:description" content="前言一直想找个简洁美观又方便（支持markdown）的地方写点东西，试过博客园，CSDN，还有各种笔记，都感觉不怎么舒服。后来发现很多人推荐用github pages+hexo搭建个人博客，果然一开始见到给我的感觉就是：惊艳。于是折腾起来，其间也遇到的各种问题，最后花了一天时间，终于完成，包括各种自定义效果和第三方服务，都尝试了一遍。最后完成打开网站的那一刻，成就感爆棚有木有！">
+  <link rel="canonical" href="http://yoursite.com/2017/02/26/github-pages-hexo搭建个人博客/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>github pages+hexo搭建个人博客 | paleomoon's blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paleomoon's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">Stay Hungry,Stay Foolish.</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/26/github-pages-hexo搭建个人博客/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paleomoon">
+      <meta itemprop="description" content="学习图像处理和计算机视觉，记录工作和生活。">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paleomoon's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">github pages+hexo搭建个人博客
+
+          
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2017-02-26 18:51:16" itemprop="dateCreated datePublished" datetime="2017-02-26T18:51:16+08:00">2017-02-26</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2017-03-05 19:45:55" itemprop="dateModified" datetime="2017-03-05T19:45:55+08:00">2017-03-05</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2017/02/26/github-pages-hexo搭建个人博客/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2017/02/26/github-pages-hexo搭建个人博客/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一直想找个简洁美观又方便（支持markdown）的地方写点东西，试过博客园，CSDN，还有各种笔记，都感觉不怎么舒服。后来发现很多人推荐用github pages+hexo搭建个人博客，果然一开始见到给我的感觉就是：惊艳。于是折腾起来，其间也遇到的各种问题，最后花了一天时间，终于完成，包括各种自定义效果和第三方服务，都尝试了一遍。最后完成打开网站的那一刻，成就感爆棚有木有！<a id="more"></a> 其实也没有，因为终究还是简单的使用，要是自己能完完全全做出个博客网站那才真的有成就感。好了，搭建博客的具体步骤就不再总结，网上很多，文末给出两篇觉得比较好的，这里总结一下一些需要注意的地方。</p>
+<h2 id="写博客基本流程"><a href="#写博客基本流程" class="headerlink" title="写博客基本流程"></a>写博客基本流程</h2><p><code>hexo new [layout] &lt;title&gt;</code>,layout有post、page 和 draft。也可以自己在scaffolds下新建有一个layout的md文件，使用自定义layout.<br>在source/_posts下打开对应文件。<br>文章头部添加信息，写文章。** 注意引号后面有空格 **  可以建立自己的文章模板，避免每次都要输入新的属性，修改scaffolds下的post.md即可.<br><code>hexo generate</code><br><code>hexo server</code> <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 预览<br><code>hexo deploy</code> 部署</p>
+<h2 id="文章修改"><a href="#文章修改" class="headerlink" title="文章修改"></a>文章修改</h2><p>修改完直接刷新localhost就能看到效果。<br>有时候修改了没生效，尝试<code>hexo  clean</code>或删除public,db.json。</p>
+<h2 id="主题的分类与标签功能出现“Cannot-GET-xxxx”问题"><a href="#主题的分类与标签功能出现“Cannot-GET-xxxx”问题" class="headerlink" title="主题的分类与标签功能出现“Cannot GET/xxxx”问题"></a>主题的分类与标签功能出现“Cannot GET/xxxx”问题</h2><p>没有初始化分类的子目录。当添加一个分类菜单，主题默认中并没有对应页面，需要自己new.<br><code>hexo new page &quot;tags&quot;</code><br>sources/tags/index.md,修改type: “tags”,comments: false</p>
+<h2 id="设置阅读全文"><a href="#设置阅读全文" class="headerlink" title="设置阅读全文"></a>设置阅读全文</h2><p>在文章中使用<code>&lt;!-- more --&gt;</code>手动进行截断，此上内容为摘要，并显示阅读全文按钮。</p>
+<h2 id="搜索菜单"><a href="#搜索菜单" class="headerlink" title="搜索菜单"></a>搜索菜单</h2><p>菜单下不需添加search,也不要new page(因为无界面)，启用后会自动添加到最后。</p>
+<h2 id="评论、分享系统"><a href="#评论、分享系统" class="headerlink" title="评论、分享系统"></a>评论、分享系统</h2><p>多说，可自定义css样式，这个可以玩玩</p>
+<h2 id="多说热评"><a href="#多说热评" class="headerlink" title="多说热评"></a>多说热评</h2><p>在标签等页面也显示，不够美观，关掉。以后再研究。</p>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>对于本地图片，需要在source目录下面新建一个目录images，然后把图片放到目录中.<br><code>![这是一张图片](/images/fens.me.png)</code><br>由于github有300M存储空间限制，所以最好使用七牛云图床生成图片外链。</p>
+<h2 id="站点统计"><a href="#站点统计" class="headerlink" title="站点统计"></a>站点统计</h2><p>使用不蒜子。</p>
+<h2 id="RSS订阅"><a href="#RSS订阅" class="headerlink" title="RSS订阅"></a>RSS订阅</h2><h2 id="远程无法更新页面"><a href="#远程无法更新页面" class="headerlink" title="远程无法更新页面"></a>远程无法更新页面</h2><p>由于之前胡乱操作导致本地目录混乱，于是整理，不小心删除.deploy_git下的.git,导致github远程无法更新静态页面。还原即可。</p>
+<h2 id="优化部署与管理"><a href="#优化部署与管理" class="headerlink" title="优化部署与管理"></a>优化部署与管理</h2><p>hexo deploy只是将.deploy_git(或public?)中的文件即生成的静态网页文件上传到github部署,那我们写的博客源文件及主题如何备份呢？<br>有人提出一种比较好的方案：在远程仓库创建两个分支，一个用来存放Hexo网站的文件，一个用来发布网站。</p>
+<blockquote>
+<ul>
+<li>博客搭建流程<br>创建仓库，username.github.io；<br>创建两个分支：master 与 hexo；<br>设置hexo为默认分支（因为我们只需要手动管理这个分支上的Hexo网站文件）；<br>使用git clone <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:username/username.github.io.git拷贝仓库；<br>username.github.io文件夹下通过Git bash依次执行npm install hexo、hexo init、npm install 和 npm install hexo-deployer-git（此时当前分支应显示为hexo）;<br>修改_config.yml中的deploy参数，分支应为master；<br>依次执行git add .、git commit -m “…”、git push origin hexo提交网站相关的文件；<br>执行hexo generate -d生成网站并部署到GitHub上。<br>这样一来，username.github.io仓库就有两个分支，一个hexo分支用来存放网站的原始文件，一个master分支用来存放生成的静态网页。</li>
+<li>日常修改<br>在本地对博客进行修改（添加新博文、修改样式等等）后，通过下面的流程进行管理：<br>依次执行git add .、git commit -m “…”、git push origin hexo指令将改动推送到GitHub（此时当前分支应为hexo）；<br>然后才执行hexo generate -d发布网站到master分支上。</li>
+<li>本地资料丢失<br>当重装电脑之后，或者想在其他电脑上修改博客，可以使用下列步骤：<br>使用git clone <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:username/username.github.io.git拷贝仓库（默认分支为hexo）；<br>在本地新拷贝的username.github.io文件夹下通过Git bash依次执行下列指令：npm install hexo、npm install、npm install hexo-deployer-git（记得，不需要hexo init这条指令）。  </li>
+</ul>
+</blockquote>
+<p>这里会有几个问题<br>首先直接将整个hexo目录push到远程。由于一开始是直接clone主题next到hexo目录下的themes下，hexo下就有两个.git，肯定报错。删除及next下的.git，结果文件结构产生混乱。最后是手动删除重复的文件，再add,commit,push。<br>另外还是由于直接clone主题，这时在远程next文件夹是灰的，意味着修改的主题并没有上传。自己琢磨，前面由于next下有.git，可能导致next目录以下有冲突而忽略了此文件夹下的文件，这时只要next没动，怎么改里面的东西都还是不会上传，包括添加.gitkeep都不会有效果。于是 git ls-files，果然没有这些文件。将整个next文件夹剪切到其他位置，add,commit,然后再将next放回，add,commit,push,问题解决！</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>整个过程很有激情，也学到了很多，包括git、markdown。<br>遇到问题首先看官方文档！首先看官方文档！首先看官方文档！重要的事情说三遍！  </p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>博客是初步搭建好了，接下来还需要逐步完善，包括功能完善、自己写一些样式进行界面优化、购买域名、SEO优化等等。<br>最重要的是，希望能够注重内容的建设。可能自己就是个没什么内涵的人，早年间写过一些文字，大多华而不实，后来意识到这点，以至于有些生厌，所以很久没有写作了。希望能够坚持写些东西，不管是技术上的，还是一些生活随笔，贵在坚持。<br>我也希望不久的将来，能够自己创建出一个完整的网站。虽然这条路并没有想象中的平坦，但仍然在朝着这个方向努力，每天有收获的感觉很充实。  </p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://www.jianshu.com/p/701b1095da11#" target="_blank" rel="noopener">手把手教你建github技术博客</a><br><a href="http://www.jianshu.com/p/5fc4672b7d2e" target="_blank" rel="noopener">Hexo博客搭建全攻略(一):基于Hexo+Github环境搭建 系列文章</a><br><a href="https://www.zhihu.com/question/21193762" target="_blank" rel="noopener">使用hexo，如果换了电脑怎么更新博客？</a><br><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo 中文文档</a><br><a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">Next 使用文档</a><br><a href="http://jimhoo.duoshuo.com/" target="_blank" rel="noopener">多说</a><br><a href="http://busuanzi.ibruce.info/" target="_blank" rel="noopener">不蒜子</a><br><a href="https://portal.qiniu.com/signin" target="_blank" rel="noopener">七牛云</a></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/github-pages/" rel="tag"># github pages</a>
+            
+              <a href="/tags/博客/" rel="tag"># 博客</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2017/02/26/git使用总结/" rel="prev" title="git使用总结">
+                  git使用总结 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写博客基本流程"><span class="nav-number">2.</span> <span class="nav-text">写博客基本流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章修改"><span class="nav-number">3.</span> <span class="nav-text">文章修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主题的分类与标签功能出现“Cannot-GET-xxxx”问题"><span class="nav-number">4.</span> <span class="nav-text">主题的分类与标签功能出现“Cannot GET/xxxx”问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置阅读全文"><span class="nav-number">5.</span> <span class="nav-text">设置阅读全文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索菜单"><span class="nav-number">6.</span> <span class="nav-text">搜索菜单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评论、分享系统"><span class="nav-number">7.</span> <span class="nav-text">评论、分享系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多说热评"><span class="nav-number">8.</span> <span class="nav-text">多说热评</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片"><span class="nav-number">9.</span> <span class="nav-text">图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#站点统计"><span class="nav-number">10.</span> <span class="nav-text">站点统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RSS订阅"><span class="nav-number">11.</span> <span class="nav-text">RSS订阅</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程无法更新页面"><span class="nav-number">12.</span> <span class="nav-text">远程无法更新页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化部署与管理"><span class="nav-number">13.</span> <span class="nav-text">优化部署与管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">14.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">15.</span> <span class="nav-text">后记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">16.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">paleomoon</p>
+  <div class="site-description" itemprop="description">学习图像处理和计算机视觉，记录工作和生活。</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/paleomoon" title="GitHub &rarr; https://github.com/paleomoon" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:huge909@gmail.com" title="E-Mail &rarr; mailto:huge909@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paleomoon</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'e0uzCIdjXHRpcDHiAYNtseNO-MdYXbMMI',
+    appKey: 'ImKrAbfQI2u4FH1j9TEYRyVh',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

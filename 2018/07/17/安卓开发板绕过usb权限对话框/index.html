@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.jpg?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.jpg?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.jpg?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.jpg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="当我们使用一些usb设备（如usb读卡器）连接到安卓开发板上时，往往会弹出询问usb权限的对话框，即使我们点击默认允许，系统重启后仍然会弹出对话框。很多时候希望板子启动后直接启动程序工作，就需要去掉这个对话框。">
+<meta name="keywords" content="安卓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安卓开发板绕过usb权限对话框">
+<meta property="og:url" content="http://yoursite.com/2018/07/17/安卓开发板绕过usb权限对话框/index.html">
+<meta property="og:site_name" content="paleomoon&#39;s blog">
+<meta property="og:description" content="当我们使用一些usb设备（如usb读卡器）连接到安卓开发板上时，往往会弹出询问usb权限的对话框，即使我们点击默认允许，系统重启后仍然会弹出对话框。很多时候希望板子启动后直接启动程序工作，就需要去掉这个对话框。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-07-17T05:19:20.377Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="安卓开发板绕过usb权限对话框">
+<meta name="twitter:description" content="当我们使用一些usb设备（如usb读卡器）连接到安卓开发板上时，往往会弹出询问usb权限的对话框，即使我们点击默认允许，系统重启后仍然会弹出对话框。很多时候希望板子启动后直接启动程序工作，就需要去掉这个对话框。">
+  <link rel="canonical" href="http://yoursite.com/2018/07/17/安卓开发板绕过usb权限对话框/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>安卓开发板绕过usb权限对话框 | paleomoon's blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paleomoon's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">Stay Hungry,Stay Foolish.</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/17/安卓开发板绕过usb权限对话框/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paleomoon">
+      <meta itemprop="description" content="学习图像处理和计算机视觉，记录工作和生活。">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paleomoon's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">安卓开发板绕过usb权限对话框
+
+          
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-07-17 13:02:49 / 修改时间：13:19:20" itemprop="dateCreated datePublished" datetime="2018-07-17T13:02:49+08:00">2018-07-17</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/安卓/" itemprop="url" rel="index"><span itemprop="name">安卓</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/07/17/安卓开发板绕过usb权限对话框/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/07/17/安卓开发板绕过usb权限对话框/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>当我们使用一些usb设备（如usb读卡器）连接到安卓开发板上时，往往会弹出询问usb权限的对话框，即使我们点击默认允许，系统重启后仍然会弹出对话框。很多时候希望板子启动后直接启动程序工作，就需要去掉这个对话框。</p>
+<a id="more"></a>
+
+<p>一般有两种解决方法，第一种是修改系统源码，找到这部分系统源码，替换掉弹窗部分。这种方法最简单有效，但代价是需要重新编译烧录系统，成本有点高。我没有用这种方法，参考链接有相关博文。这里主要介绍第二种方法。</p>
+<p>我们可以伪造一个假的广播，也就是提前封装好点击对话框的工作，直接让自己接收广播，就绕开了那个对话框。步骤如下：</p>
+<ol>
+<li><p>在工程中增加包名为android.hardware.usb的包，并且添加IUsbManager.java文件。文件内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line">package android.hardware.usb;</span><br><span class="line"></span><br><span class="line">public interface IUsbManager extends android.os.IInterface</span><br><span class="line">&#123;</span><br><span class="line">/** Local-side IPC implementation stub class. */</span><br><span class="line">public static abstract class Stub extends android.os.Binder implements android.hardware.usb.IUsbManager &#123;</span><br><span class="line">    private static final java.lang.String DESCRIPTOR = &quot;android.hardware.usb.IUsbManager&quot;;</span><br><span class="line"></span><br><span class="line">    /** Construct the stub at attach it to the interface. */</span><br><span class="line">    public Stub()         &#123;</span><br><span class="line">        throw new RuntimeException( &quot;Stub!&quot; );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Cast an IBinder object into an android.hardware.usb.IUsbManager</span><br><span class="line">     * interface, generating a proxy if needed.</span><br><span class="line">     */</span><br><span class="line">    public static android.hardware.usb.IUsbManager asInterface( android.os.IBinder obj) &#123;</span><br><span class="line">        throw new RuntimeException( &quot;Stub!&quot; );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public android.os.IBinder asBinder() &#123;</span><br><span class="line">        throw new RuntimeException( &quot;Stub!&quot; );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean onTransact(int code, android.os.Parcel data, android.os.Parcel reply, int flags) throws android.os.RemoteException &#123;</span><br><span class="line">        throw new RuntimeException( &quot;Stub!&quot; );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    static final int TRANSACTION_getDeviceList = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);</span><br><span class="line">    static final int TRANSACTION_openDevice = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);</span><br><span class="line">    static final int TRANSACTION_getCurrentAccessory = (android.os.IBinder.FIRST_CALL_TRANSACTION + 2);</span><br><span class="line">    static final int TRANSACTION_openAccessory = (android.os.IBinder.FIRST_CALL_TRANSACTION + 3);</span><br><span class="line">    static final int TRANSACTION_setDevicePackage = (android.os.IBinder.FIRST_CALL_TRANSACTION + 4);</span><br><span class="line">    static final int TRANSACTION_setAccessoryPackage = (android.os.IBinder.FIRST_CALL_TRANSACTION + 5);</span><br><span class="line">    static final int TRANSACTION_hasDevicePermission = (android.os.IBinder.FIRST_CALL_TRANSACTION + 6);</span><br><span class="line">    static final int TRANSACTION_hasAccessoryPermission = (android.os.IBinder.FIRST_CALL_TRANSACTION + 7);</span><br><span class="line">    static final int TRANSACTION_requestDevicePermission = (android.os.IBinder.FIRST_CALL_TRANSACTION + 8);</span><br><span class="line">    static final int TRANSACTION_requestAccessoryPermission = (android.os.IBinder.FIRST_CALL_TRANSACTION + 9);</span><br><span class="line">    static final int TRANSACTION_grantDevicePermission = (android.os.IBinder.FIRST_CALL_TRANSACTION + 10);</span><br><span class="line">    static final int TRANSACTION_grantAccessoryPermission = (android.os.IBinder.FIRST_CALL_TRANSACTION + 11);</span><br><span class="line">    static final int TRANSACTION_hasDefaults = (android.os.IBinder.FIRST_CALL_TRANSACTION + 12);</span><br><span class="line">    static final int TRANSACTION_clearDefaults = (android.os.IBinder.FIRST_CALL_TRANSACTION + 13);</span><br><span class="line">    static final int TRANSACTION_setCurrentFunction = (android.os.IBinder.FIRST_CALL_TRANSACTION + 14);</span><br><span class="line">    static final int TRANSACTION_setMassStorageBackingFile = (android.os.IBinder.FIRST_CALL_TRANSACTION + 15);</span><br><span class="line">    static final int TRANSACTION_allowUsbDebugging = (android.os.IBinder.FIRST_CALL_TRANSACTION + 16);</span><br><span class="line">    static final int TRANSACTION_denyUsbDebugging = (android.os.IBinder.FIRST_CALL_TRANSACTION + 17);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/* Returns a list of all currently attached USB devices */</span><br><span class="line">public void getDeviceList(android.os.Bundle devices)</span><br><span class="line">        throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line"> * Returns a file descriptor for communicating with the USB device. The</span><br><span class="line"> * native fd can be passed to usb_device_new() in libusbhost.</span><br><span class="line"> */</span><br><span class="line">public android.os.ParcelFileDescriptor openDevice(</span><br><span class="line">        java.lang.String deviceName) throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/* Returns the currently attached USB accessory */</span><br><span class="line">public android.hardware.usb.UsbAccessory getCurrentAccessory()</span><br><span class="line">        throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line"> * Returns a file descriptor for communicating with the USB accessory. This</span><br><span class="line"> * file descriptor can be used with standard Java file operations.</span><br><span class="line"> */</span><br><span class="line">public android.os.ParcelFileDescriptor openAccessory(</span><br><span class="line">        android.hardware.usb.UsbAccessory accessory)</span><br><span class="line">        throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line"> * Sets the default package for a USB device (or clears it if the package</span><br><span class="line"> * name is null)</span><br><span class="line"> */</span><br><span class="line">public void setDevicePackage(android.hardware.usb.UsbDevice device,</span><br><span class="line">        java.lang.String packageName, int userId)</span><br><span class="line">        throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line"> * Sets the default package for a USB accessory (or clears it if the package</span><br><span class="line"> * name is null)</span><br><span class="line"> */</span><br><span class="line">public void setAccessoryPackage(</span><br><span class="line">        android.hardware.usb.UsbAccessory accessory,</span><br><span class="line">        java.lang.String packageName, int userId)</span><br><span class="line">        throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/* Returns true if the caller has permission to access the device. */</span><br><span class="line">public boolean hasDevicePermission(android.hardware.usb.UsbDevice device)</span><br><span class="line">        throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/* Returns true if the caller has permission to access the accessory. */</span><br><span class="line">public boolean hasAccessoryPermission(</span><br><span class="line">        android.hardware.usb.UsbAccessory accessory)</span><br><span class="line">        throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line"> * Requests permission for the given package to access the device. Will</span><br><span class="line"> * display a system dialog to query the user if permission had not already</span><br><span class="line"> * been given.</span><br><span class="line"> */</span><br><span class="line">public void requestDevicePermission(android.hardware.usb.UsbDevice device,</span><br><span class="line">        java.lang.String packageName, android.app.PendingIntent pi)</span><br><span class="line">        throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line"> * Requests permission for the given package to access the accessory. Will</span><br><span class="line"> * display a system dialog to query the user if permission had not already</span><br><span class="line"> * been given. Result is returned via pi.</span><br><span class="line"> */</span><br><span class="line">public void requestAccessoryPermission(</span><br><span class="line">        android.hardware.usb.UsbAccessory accessory,</span><br><span class="line">        java.lang.String packageName, android.app.PendingIntent pi)</span><br><span class="line">        throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/* Grants permission for the given UID to access the device */</span><br><span class="line">public void grantDevicePermission(android.hardware.usb.UsbDevice device,</span><br><span class="line">        int uid) throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/* Grants permission for the given UID to access the accessory */</span><br><span class="line">public void grantAccessoryPermission(</span><br><span class="line">        android.hardware.usb.UsbAccessory accessory, int uid)</span><br><span class="line">        throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line"> * Returns true if the USB manager has default preferences or permissions</span><br><span class="line"> * for the package</span><br><span class="line"> */</span><br><span class="line">public boolean hasDefaults(java.lang.String packageName, int userId)</span><br><span class="line">        throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/* Clears default preferences and permissions for the package */</span><br><span class="line">public void clearDefaults(java.lang.String packageName, int userId)</span><br><span class="line">        throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/* Sets the current USB function. */</span><br><span class="line">public void setCurrentFunction(java.lang.String function,</span><br><span class="line">        boolean makeDefault) throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/* Sets the file path for USB mass storage backing file. */</span><br><span class="line">public void setMassStorageBackingFile(java.lang.String path)</span><br><span class="line">        throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line"> * Allow USB debugging from the attached host. If alwaysAllow is true, add</span><br><span class="line"> * the the public key to list of host keys that the user has approved.</span><br><span class="line"> */</span><br><span class="line">public void allowUsbDebugging(boolean alwaysAllow,</span><br><span class="line">        java.lang.String publicKey) throws android.os.RemoteException;</span><br><span class="line"></span><br><span class="line">/* Deny USB debugging from the attached host */</span><br><span class="line">public void denyUsbDebugging() throws android.os.RemoteException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>增加包名为android.os的包，并且添加ServiceManager.java文件。文件内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">package android.os;  </span><br><span class="line">  </span><br><span class="line">import java.util.Map;  </span><br><span class="line">  </span><br><span class="line">public final class ServiceManager &#123;  </span><br><span class="line">    public static IBinder getService(String name) &#123;  </span><br><span class="line">        throw new RuntimeException(&quot;Stub!&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    /** </span><br><span class="line">     * Place a new @a service called @a name into the service manager. </span><br><span class="line">     *  </span><br><span class="line">     * @param name </span><br><span class="line">     *            the name of the new service </span><br><span class="line">     * @param service </span><br><span class="line">     *            the service object </span><br><span class="line">     */  </span><br><span class="line">    public static void addService(String name, IBinder service) &#123;  </span><br><span class="line">        throw new RuntimeException(&quot;Stub!&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    /** </span><br><span class="line">     * Retrieve an existing service called @a name from the service manager. </span><br><span class="line">     * Non-blocking. </span><br><span class="line">     */  </span><br><span class="line">    public static IBinder checkService(String name) &#123;  </span><br><span class="line">        throw new RuntimeException(&quot;Stub!&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    public static String[] listServices() throws RemoteException &#123;  </span><br><span class="line">        throw new RuntimeException(&quot;Stub!&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    /** </span><br><span class="line">     * This is only intended to be called when the process is first being </span><br><span class="line">     * brought up and bound by the activity manager. There is only one thread in </span><br><span class="line">     * the process at that time, so no locking is done. </span><br><span class="line">     *  </span><br><span class="line">     * @param cache </span><br><span class="line">     *            the cache of service references </span><br><span class="line">     * @hide </span><br><span class="line">     */  </span><br><span class="line">    public static void initServiceCache(Map&lt;String, IBinder&gt; cache) &#123;  </span><br><span class="line">        throw new RuntimeException(&quot;Stub!&quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新建一个广播接收类，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Iterator;</span><br><span class="line"></span><br><span class="line">import android.content.BroadcastReceiver;</span><br><span class="line">import android.content.Context;</span><br><span class="line">import android.content.Intent;</span><br><span class="line">import android.content.pm.ApplicationInfo;</span><br><span class="line">import android.content.pm.PackageManager;</span><br><span class="line">import android.hardware.usb.IUsbManager;</span><br><span class="line">import android.hardware.usb.UsbDevice;</span><br><span class="line">import android.hardware.usb.UsbManager;</span><br><span class="line">import android.os.IBinder;</span><br><span class="line">import android.os.ServiceManager;</span><br><span class="line"></span><br><span class="line">public class LaunchReceiver extends BroadcastReceiver</span><br><span class="line">&#123;</span><br><span class="line">    @SuppressLint(&quot;NewApi&quot;)</span><br><span class="line">	public void onReceive( Context context, Intent intent )</span><br><span class="line">    &#123;</span><br><span class="line">        String action = intent.getAction();</span><br><span class="line">        if( action != null &amp;&amp; action.equals( Intent.ACTION_BOOT_COMPLETED ) )</span><br><span class="line">        &#123;</span><br><span class="line">            try</span><br><span class="line">            &#123;</span><br><span class="line">                PackageManager pm = context.getPackageManager();</span><br><span class="line">                ApplicationInfo ai = pm.getApplicationInfo( YOUR_APP_PACKAGE_NAMESPACE, 0 );</span><br><span class="line">                if( ai != null )</span><br><span class="line">                &#123;</span><br><span class="line">                    UsbManager manager = (UsbManager) context.getSystemService( Context.USB_SERVICE );</span><br><span class="line">                    IBinder b = ServiceManager.getService( Context.USB_SERVICE );</span><br><span class="line">                    IUsbManager service = IUsbManager.Stub.asInterface( b );</span><br><span class="line"></span><br><span class="line">                    HashMap&lt;String, UsbDevice&gt; deviceList = manager.getDeviceList();</span><br><span class="line">                    Iterator&lt;UsbDevice&gt; deviceIterator = deviceList.values().iterator();</span><br><span class="line">                    while( deviceIterator.hasNext() )</span><br><span class="line">                    &#123;</span><br><span class="line">                            UsbDevice device = deviceIterator.next();</span><br><span class="line">                            if( device.getVendorId() == 0x4292 )//usb设备的vid（厂家提供）</span><br><span class="line">                            &#123;</span><br><span class="line">                                service.grantDevicePermission( device, ai.uid );</span><br><span class="line">                                service.setDevicePackage( device, YOUR_APP_PACKAGE_NAMESPACE ,ai.uid);</span><br><span class="line">                            &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            catch( Exception e )</span><br><span class="line">            &#123;</span><br><span class="line">                //trace( e.toString() );</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将应用拷贝在/system/app下面，点击安装，成为系统应用。将APK拷贝到/system/app的方法是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#adb shell  </span><br><span class="line"># mount -o remount,rw -t ext4 /dev/block/mtdblock3 /system // 让分区可写。  </span><br><span class="line">//windows回到命令提示符下  </span><br><span class="line">&gt;adb push xxx.apk /system/app/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当然，不要忘了在AndroidManifest.xml文件中添加权限：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;uses-permission android:name=&quot;android.permission.MANAGE_USB&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;intent-filter&gt;</span><br><span class="line">     &lt;action android:name=&quot;android.hardware.usb.action.USB_DEVICE_ATTACHED&quot; /&gt;</span><br><span class="line">&lt;/intent-filter&gt;</span><br><span class="line">&lt;meta-data android:name=&quot;android.hardware.usb.action.USB_DEVICE_ATTACHED&quot;  </span><br><span class="line">	android:resource=&quot;@xml/device_filter&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>其中device_filter.xml文件包含usb读卡器的vid和pid:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;resources&gt;</span><br><span class="line">    &lt;!-- 以下内容的 vendor-id、product-id就是USB的vid和pid了--&gt;</span><br><span class="line">    &lt;usb-device vendor-id=&quot;4292&quot; product-id=&quot;1234&quot;/&gt;   </span><br><span class="line">&lt;/resources&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在步骤3中的广播接受类中可以指定此vid。</p>
+</li>
+</ol>
+<p>至此，我们可以不修改源码，在应用层绕过usb对话框。经测试，在安卓5.1.1版本成功！如果其他版本的系统无效，可能需要根据对应版本的系统源码，修改步骤1、2的代码。</p>
+<p>参考</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/13726583/bypass-android-usb-host-permission-confirmation-dialog" target="_blank" rel="noopener">bypass android usb host permission confirmation dialog</a></li>
+<li><a href="https://blog.csdn.net/mlj1668956679/article/details/14122787" target="_blank" rel="noopener">绕过android usb主机permision确认对话框</a></li>
+<li><a href="https://blog.csdn.net/u010312937/article/details/62045812" target="_blank" rel="noopener">Android绕过usb主机permision确认对话框framework修改方案</a></li>
+<li><a href="https://blog.csdn.net/godiors_163/article/details/72526792" target="_blank" rel="noopener">Android定制：去掉USB权限弹窗</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/安卓/" rel="tag"># 安卓</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/06/03/安卓使用zbar扫描二维码/" rel="next" title="安卓使用zbar扫描二维码">
+                  <i class="fa fa-chevron-left"></i> 安卓使用zbar扫描二维码
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/09/06/darknet安卓移植/" rel="prev" title="darknet安卓移植">
+                  darknet安卓移植 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">paleomoon</p>
+  <div class="site-description" itemprop="description">学习图像处理和计算机视觉，记录工作和生活。</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/paleomoon" title="GitHub &rarr; https://github.com/paleomoon" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:huge909@gmail.com" title="E-Mail &rarr; mailto:huge909@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paleomoon</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'e0uzCIdjXHRpcDHiAYNtseNO-MdYXbMMI',
+    appKey: 'ImKrAbfQI2u4FH1j9TEYRyVh',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>
