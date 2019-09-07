@@ -5,6 +5,8 @@ tags: [深度学习]
 categories: 深度学习
 ---
 
+## darknet2ncnn安卓移植
+
 项目使用的版本是[老版darknet2ncnn](https://github.com/xiangweizeng/darknet2ncnn/tree/72696c6efc3899d63463be2e9faf4e5b246569ff)，之后作者[适配到了ncnn最新版](https://github.com/xiangweizeng/darknet2ncnn/)。
 
 <!-- more -->
