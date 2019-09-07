@@ -370,7 +370,7 @@
 <li>上下月日期显示灰色<br>生成HTML内容时为上下月添加控制样式的类即可。</li>
 </ol>
 <h1 id="组件化思想"><a href="#组件化思想" class="headerlink" title="组件化思想"></a>组件化思想</h1><p>为了模块不污染外部环境，将所有JS代码包裹在一个立即执行的匿名函数<code>(function () {})()</code>中，在函数中定义一个对象<code>var datepicker = {};</code>，唯一暴露给外界的对象只有该对象：<code>window.datepicker = datepicker;</code>。<br>组件的容器类名可以取一个独特且比较长的名字，避免与外界产生冲突：<code>ui-datepicker-wrapper</code>，所有组件内部元素名称通过级联选择器包含在这个选择器内。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p><a href="https://paleomoon.github.io/components/DatePicker/index.html" target="_blank" rel="noopener">预览地址</a><br><a href="https://github.com/paleomoon/components/tree/master/DatePicker" target="_blank" rel="noopener">代码地址</a>  </p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p><a href="https://paleomoon.github.io/components/DatePicker/index.html">预览地址</a><br><a href="https://github.com/paleomoon/components/tree/master/DatePicker" target="_blank" rel="noopener">代码地址</a>  </p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.imooc.com/learn/820" target="_blank" rel="noopener">DatePicker组件开发 - 慕课网</a></p>
 
     </div>
@@ -561,100 +561,6 @@
 
 
 
-  
-  <script>
-  function leancloudSelector(url) {
-    return document.getElementById(url).querySelector('.leancloud-visitors-count');
-  }
-  if (CONFIG.page.isPost) {
-    function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = visitors.getAttribute('id').trim();
-      var title = visitors.getAttribute('data-flag-title').trim();
-
-      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length > 0) {
-            var counter = results[0];
-            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
-              .then(response => response.json())
-              .then(() => {
-                leancloudSelector(url).innerText = counter.time + 1;
-              })
-            
-              .catch(error => {
-                console.log('Failed to save visitor count', error);
-              })
-          } else {
-              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
-              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
-            
-          }
-        })
-        .catch(error => {
-          console.log('LeanCloud Counter Error', error);
-        });
-    }
-  } else {
-    function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
-        return element.getAttribute('id').trim();
-      });
-
-      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length === 0) {
-            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
-              element.innerText = 0;
-            });
-            return;
-          }
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.url;
-            var time = item.time;
-            leancloudSelector(url).innerText = time;
-          }
-          for (var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = leancloudSelector(url);
-            if (element.innerText == '') {
-              element.innerText = 0;
-            }
-          }
-        })
-        .catch(error => {
-          console.log('LeanCloud Counter Error', error);
-        });
-    }
-  }
-
-  fetch('https://app-router.leancloud.cn/2/route?appId=e0uzCIdjXHRpcDHiAYNtseNO-MdYXbMMI')
-    .then(response => response.json())
-    .then(({ api_server }) => {
-      var Counter = (method, url, data) => {
-        return fetch(`https://${api_server}/1.1${url}`, {
-          method: method,
-          headers: {
-            'X-LC-Id': 'e0uzCIdjXHRpcDHiAYNtseNO-MdYXbMMI',
-            'X-LC-Key': 'ImKrAbfQI2u4FH1j9TEYRyVh',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      };
-      if (CONFIG.page.isPost) {
-        const localhost = /http:\/\/(localhost|127.0.0.1|0.0.0.0)/;
-        if (localhost.test(document.URL)) return;
-        addCount(Counter);
-      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
 
 
 

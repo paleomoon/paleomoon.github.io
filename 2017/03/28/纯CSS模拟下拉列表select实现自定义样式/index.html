@@ -376,7 +376,7 @@
 <p>以上就是纯 css 实现自定义下拉列表的方法，经测试兼容 IE10 和 chrome。移动浏览器和 IE8 的兼容性可以参考原文。  </p>
 <p>缺点：<br>选中选项后无法自动收起，必须鼠标移出后才可以。因为 css 没有父选择器，触发 checked 选择器后无法操作 li,要解决只能借助js了。  </p>
 <p>我们看到，使用纯 css 代码很多，比较复杂。在实际项目中还是使用js或一些插件较好，否则有点得不偿失。  </p>
-<p><a href="https://paleomoon.github.io/LearningFrontEnd/css/custom-select/index.html" target="_blank" rel="noopener">预览地址</a><br><a href="https://github.com/paleomoon/LearningFrontEnd/tree/master/css/custom-select" target="_blank" rel="noopener">代码地址</a>  </p>
+<p><a href="https://paleomoon.github.io/LearningFrontEnd/css/custom-select/index.html">预览地址</a><br><a href="https://github.com/paleomoon/LearningFrontEnd/tree/master/css/custom-select" target="_blank" rel="noopener">代码地址</a>  </p>
 <p>参考：<br><a href="https://pepsized.com/css-only-alternative-to-the-select-element/?utm_source=tuicool&utm_medium=referral" target="_blank" rel="noopener">Css-only Alternative to the Select Element</a><br><a href="http://stackoverflow.com/questions/1895476/how-to-style-a-select-dropdown-with-css-only-without-javascript" target="_blank" rel="noopener">How to style a select dropdown with CSS only without JavaScript - stackoverflow</a><br><a href="http://blog.csdn.net/zhouziyu2011/article/details/53729732" target="_blank" rel="noopener">浅谈CSS自定义下拉列表的样式 - CSDN</a></p>
 
     </div>
@@ -567,100 +567,6 @@
 
 
 
-  
-  <script>
-  function leancloudSelector(url) {
-    return document.getElementById(url).querySelector('.leancloud-visitors-count');
-  }
-  if (CONFIG.page.isPost) {
-    function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = visitors.getAttribute('id').trim();
-      var title = visitors.getAttribute('data-flag-title').trim();
-
-      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length > 0) {
-            var counter = results[0];
-            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
-              .then(response => response.json())
-              .then(() => {
-                leancloudSelector(url).innerText = counter.time + 1;
-              })
-            
-              .catch(error => {
-                console.log('Failed to save visitor count', error);
-              })
-          } else {
-              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
-              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
-            
-          }
-        })
-        .catch(error => {
-          console.log('LeanCloud Counter Error', error);
-        });
-    }
-  } else {
-    function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
-        return element.getAttribute('id').trim();
-      });
-
-      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length === 0) {
-            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
-              element.innerText = 0;
-            });
-            return;
-          }
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.url;
-            var time = item.time;
-            leancloudSelector(url).innerText = time;
-          }
-          for (var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = leancloudSelector(url);
-            if (element.innerText == '') {
-              element.innerText = 0;
-            }
-          }
-        })
-        .catch(error => {
-          console.log('LeanCloud Counter Error', error);
-        });
-    }
-  }
-
-  fetch('https://app-router.leancloud.cn/2/route?appId=e0uzCIdjXHRpcDHiAYNtseNO-MdYXbMMI')
-    .then(response => response.json())
-    .then(({ api_server }) => {
-      var Counter = (method, url, data) => {
-        return fetch(`https://${api_server}/1.1${url}`, {
-          method: method,
-          headers: {
-            'X-LC-Id': 'e0uzCIdjXHRpcDHiAYNtseNO-MdYXbMMI',
-            'X-LC-Key': 'ImKrAbfQI2u4FH1j9TEYRyVh',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      };
-      if (CONFIG.page.isPost) {
-        const localhost = /http:\/\/(localhost|127.0.0.1|0.0.0.0)/;
-        if (localhost.test(document.URL)) return;
-        addCount(Counter);
-      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
 
 
 
