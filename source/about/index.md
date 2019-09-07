@@ -5,5 +5,5 @@ type: "about"
 comments: false
 ---
 ## 关于我  
-  
-  一只学习前端的小菜鸟。
+
+  一只小菜鸡。
