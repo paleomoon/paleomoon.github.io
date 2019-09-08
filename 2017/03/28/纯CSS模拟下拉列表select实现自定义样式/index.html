@@ -31,12 +31,12 @@
     version: '7.4.0',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
+    mediumzoom: true,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -65,12 +65,10 @@
 <meta property="og:site_name" content="paleomoon&#39;s blog">
 <meta property="og:description" content="下拉列表 select 是一个 bom 元素，因此要美化它的时候仅仅依靠 css 无法实现。这里有两种方案：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://omcbb8o2a.bkt.clouddn.com/image/github-pages/cs_select.JPG">
 <meta property="og:updated_time" content="2017-08-30T15:25:03.727Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="纯CSS模拟下拉列表select实现自定义样式">
 <meta name="twitter:description" content="下拉列表 select 是一个 bom 元素，因此要美化它的时候仅仅依靠 css 无法实现。这里有两种方案：">
-<meta name="twitter:image" content="http://omcbb8o2a.bkt.clouddn.com/image/github-pages/cs_select.JPG">
   <link rel="canonical" href="https://paleomoon.github.io/2017/03/28/纯CSS模拟下拉列表select实现自定义样式/">
 
 
@@ -268,7 +266,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="paleomoon">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/logo.jpg">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -367,7 +365,7 @@
 
 <p>缺点：option 样式无法修改，包括宽高，这个真的无解。</p>
 <h2 id="使用-radio-模拟下拉列表"><a href="#使用-radio-模拟下拉列表" class="headerlink" title="使用 radio 模拟下拉列表"></a>使用 radio 模拟下拉列表</h2><p>网上找到的一篇博客，原理很简单但对于我这样的初学者实现起来也是很麻烦。大致理解了并进行了部分修改，有点乱。  </p>
-<p>效果：<br><img src="http://omcbb8o2a.bkt.clouddn.com/image/github-pages/cs_select.JPG" alt="效果">  </p>
+<p>效果：<br><img alt="效果" data-src="http://omcbb8o2a.bkt.clouddn.com/image/github-pages/cs_select.JPG">  </p>
 <p>原理：</p>
 <ul>
 <li>将所有 li 使用绝对定位置于 div 触发器下,设置 z-index 使 li 被遮挡，</li>
@@ -521,7 +519,7 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
-      src="/images/logo.jpg"
+      src="/images/avatar.jpg"
       alt="paleomoon">
   <p class="site-author-name" itemprop="name">paleomoon</p>
   <div class="site-description" itemprop="description"></div>
@@ -668,6 +666,8 @@
   <script src="/lib/anime.min.js?v=3.1.0"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
 <script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
 <script src="/js/schemes/pisces.js?v=7.4.0"></script>
 
@@ -676,6 +676,15 @@
 
 
   
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
 
 
 
@@ -698,6 +707,8 @@
 
 
 
+
+  
 
   
 
