@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: true,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="旧版Hexo博客已近建了两年多了，也没写几篇博客，最近想把一些笔记发表上来，旧版有些功能失效了，强迫症犯了想升级一下。">
+<meta name="keywords" content="github pages,博客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo-and-theme-next-update">
+<meta property="og:url" content="https://paleomoon.github.io/2019/09/08/hexo-and-theme-next-update/index.html">
+<meta property="og:site_name" content="paleomoon&#39;s blog">
+<meta property="og:description" content="旧版Hexo博客已近建了两年多了，也没写几篇博客，最近想把一些笔记发表上来，旧版有些功能失效了，强迫症犯了想升级一下。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-08T07:14:59.009Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hexo-and-theme-next-update">
+<meta name="twitter:description" content="旧版Hexo博客已近建了两年多了，也没写几篇博客，最近想把一些笔记发表上来，旧版有些功能失效了，强迫症犯了想升级一下。">
+  <link rel="canonical" href="https://paleomoon.github.io/2019/09/08/hexo-and-theme-next-update/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>hexo-and-theme-next-update | paleomoon's blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paleomoon's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">Stay Hungry,Stay Foolish.</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://paleomoon.github.io/2019/09/08/hexo-and-theme-next-update/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paleomoon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paleomoon's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">hexo-and-theme-next-update
+
+          
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-08 15:14:01 / 修改时间：15:14:59" itemprop="dateCreated datePublished" datetime="2019-09-08T15:14:01+08:00">2019-09-08</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/其他技术/" itemprop="url" rel="index"><span itemprop="name">其他技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>3.5k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>3 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>旧版Hexo博客已近建了两年多了，也没写几篇博客，最近想把一些笔记发表上来，旧版有些功能失效了，强迫症犯了想升级一下。</p>
+<a id="more"></a>
+
+<h2 id="Hexo-以及-Next-主题升级"><a href="#Hexo-以及-Next-主题升级" class="headerlink" title="Hexo 以及 Next 主题升级"></a>Hexo 以及 Next 主题升级</h2><p>从原目录升级太麻烦了，各种报错，所以使用增量升级的方式。</p>
+<blockquote>
+<p>简单来说就是直接在新的环境中安装最新版本的<code>Hexo</code>以及<code>NexT</code>主题，然后创建一个博客的框架，把旧的配置文件中自定义的内容复制到新的配置文件中，最后把文章拷到新的目录中。</p>
+</blockquote>
+<p>这种方式差不多等于重新装了一遍，也是相当麻烦。没办法，不出错就行。所以重新走了一遍流程。</p>
+<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><p>创建<code>hexo</code>目录，打开 git bash：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">hexo init .</span><br><span class="line">npm install</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<p>在<code>http://localhost:4000</code>应该可以看到博客页面了。</p>
+<p>报错的话，执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo —save</span><br><span class="line">npm install hexo-server --save</span><br></pre></td></tr></table></figure>
+
+<p>打开老目录下的 _config.yml 文件，看哪些地方改了，修改新目录 _config.yml 对应的地方。</p>
+<p>中文语言设置，已经从 <code>zh-Hans</code> 更换为 <code>zh-CN</code>。</p>
+<p>清除 Hexo 的缓存并验证主题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp; hexo s --debug</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装Next主题"><a href="#安装Next主题" class="headerlink" title="安装Next主题"></a>安装Next主题</h3><p>注意老版已经不维护了，新版是 <a href="https://github.com/theme-next/hexo-theme-next" target="_blank" rel="noopener">https://github.com/theme-next/hexo-theme-next</a> ，但只有<a href="https://theme-next.org/" target="_blank" rel="noopener">英文文档</a>，配置方面可以参考一下<a href="http://[http://theme-next.iissnan.com]" target="_blank" rel="noopener">老版文档</a>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd hexo</span><br><span class="line">git clone https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+
+<p>打开老 theme 目录下的 _config.yml 文件，估计哪些地方改了，修改新 theme 目录下 _config.yml 文件对应的地方。这个文件很长，耐心改。</p>
+<p>把scaffolds、source拷贝过来。</p>
+<p>生成并部署：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g -d</span><br></pre></td></tr></table></figure>
+
+<p>报错的话执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<p>之前有<a href="https://paleomoon.github.io/2017/02/26/github-pages-hexo搭建个人博客/">设立另外的分支作为博客源文件备份</a>，建立新目录后，只需把原目录下的 <code>.git</code> 文件夹复制过来即可，什么都不要改，一样的 git add commit push 。</p>
+<h2 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h2><p>之前用的<a href="https://livere.com/introduce" target="_blank" rel="noopener"> LiveRe.</a>，几年了多说、畅言等都不好用了，这个倒是挺坚挺的。虽然挺稳定的，但速度有点慢，也没有回复通知，不是很好用。</p>
+<h3 id="Valine"><a href="#Valine" class="headerlink" title="Valine"></a>Valine</h3><p>Valine 现在用的人挺多的，于是打算试试。 leancloud 中国需要绑定域名了，使用<a href="https://leancloud.app/" target="_blank" rel="noopener">国际版</a>即可。</p>
+<p>进入控制台后点击左下角创建应用，应用创建好以后，进入刚刚创建的应用，选择左下角的设置&gt;应用Key，然后就能看到你的APP ID和APP Key了。</p>
+<p>设置评论邮件通知：<a href="https://github.com/xCss/Valine/wiki。设置了没有效果，有更复杂的方法，太麻烦不弄了。" target="_blank" rel="noopener">https://github.com/xCss/Valine/wiki。设置了没有效果，有更复杂的方法，太麻烦不弄了。</a></p>
+<p>界面和 Next 挺搭的，但不能收到回复提醒（虽然没几个人回复）。就算能收到提醒，你如果没有立即回复，访客也大概不会之后再点进你的博客了。如果访客用常用的账号登录，并能在某个地方方便地看到回复（不需要再点进你的博客找到某篇文章），相当于有个第三方评论系统，感觉这样比较好。</p>
+<h3 id="utterances"><a href="#utterances" class="headerlink" title="utterances"></a>utterances</h3><p>又想用回 cnblogs，可毕竟是个技术论坛，想有个地方能写写东西，不仅仅局限于技术。看到 <a href="https://utteranc.es/" target="_blank" rel="noopener">utteranc</a>，有点接近我想要的亚子，又有点动力了，哈哈哈。</p>
+<p>utterances 是基于 github issue，拥有多种主题的开源免费小组件。需要满足两个条件：</p>
+<ol>
+<li>首先我们所需要的 github 存储库必须是公开的，而不是私有的，这样我们的读者才可以查看以及发表评论。</li>
+<li>我们必须在 github 上进行安装 utterances,首先我们访问 <a href="https://github.com/apps/utterances" target="_blank" rel="noopener">utterances应用程序</a> 然后点击 Install 按钮进行安装。我们只选择某一个需要进行评论的库安装。</li>
+</ol>
+<p>Next 已经集成了utterances 评论： <a href="https://github.com/theme-next/hexo-next-utteranc。" target="_blank" rel="noopener">https://github.com/theme-next/hexo-next-utteranc。</a></p>
+<p>安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save github:theme-next/hexo-next-utteranc</span><br></pre></td></tr></table></figure>
+
+<p>在主题配置文件中新建配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Demo: https://utteranc.es/  http://trumandu.github.io/about/</span><br><span class="line">utteranc:</span><br><span class="line">  enable: true</span><br><span class="line">  repo: paleomoon/paleomoon.github.io #Github repo such as :TrumanDu/comments</span><br><span class="line">  pathname: pathname</span><br><span class="line">  # theme: github-light,github-dark,github-dark-orange</span><br><span class="line">  theme: github-light</span><br><span class="line">  cdn: https://utteranc.es/client.js</span><br><span class="line">  # If you want to modify priority, please config in **hexo**</span><br><span class="line">  #priority:</span><br></pre></td></tr></table></figure>
+
+<p>如果出现跳转错误的问题（如登录后跳转到 <a href="https://link.zhihu.com/?target=https%3A//yoursite.com/" target="_blank" rel="noopener">https://yoursite.com/</a>），请在Hexo 的配置文件中搜索<code># URL</code>，将<code>url:</code>配置为<code>/</code>或你的站点的URL地址。</p>
+<p>这样我们每篇博客的评论会显示在 repository 的 issues 中， 可以直接在 issues 进行评论和回复，博客中的评论也会更新，很棒了！唯一缺点就是文章链接不能显示中文，问题不大。</p>
+<p><a href="https://zhuanlan.zhihu.com/p/76237379" target="_blank" rel="noopener">参考</a></p>
+<h2 id="访问统计"><a href="#访问统计" class="headerlink" title="访问统计"></a>访问统计</h2><p>使用 leancloud_visitors 经常不显示，改用不蒜子。</p>
+<p>在主题的配置文件中搜索<code>busuanzi_count</code>，将下面的enable属性设为true即可。不蒜子的缺点是统计不是很准（只多不少，很容易刷数据），将就着用吧。</p>
+<h2 id="站内搜索"><a href="#站内搜索" class="headerlink" title="站内搜索"></a>站内搜索</h2><p>使用 Local Search。</p>
+<ol>
+<li><p>安装 <code>hexo-generator-searchdb</code>，在站点的根目录下执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑 <strong>站点配置文件</strong>，新增以下内容到任意位置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑 <strong>主题配置文件</strong>，启用本地搜索功能：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Local search</span><br><span class="line">local_search:</span><br><span class="line">  enable: true</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><p>在主题配置文件中搜索 <code>font</code>，可设置字体。我把 global 中设为 <code>size: 0.88</code>，没改其他东西，看着也还行。</p>
+<p>如果要自定义CSS样式，只要在<code>themes/next/source/css/_custom/custom.styl</code>文件中写入相应的CSS代码就行了。</p>
+<p><strong>注意</strong></p>
+<ul>
+<li>文件后缀为<code>styl</code>，猜测可能是使用stylus语法的样式文件。但是我试过了，直接写CSS代码是可行的。</li>
+<li>涉及到文件引用的地方要注意路径。如果使用相对路径，默认当前目录为<code>themes/next/source/css/</code>。</li>
+<li>注意要执行<code>hexo clean</code>命令，清除已经生成的文件。然后再执行<code>hexo generate</code>重新生成文件。否则样式可能不会生效。</li>
+<li>如果页面刷新后，新的样式没有生效，建议检查<code>public/css/main.css</code>中有没有加入新的CSS代码。</li>
+</ul>
+<h2 id="设置动态背景"><a href="#设置动态背景" class="headerlink" title="设置动态背景"></a>设置动态背景</h2><p><a href="https://github.com/theme-next/theme-next-canvas-nest" target="_blank" rel="noopener">https://github.com/theme-next/theme-next-canvas-nest</a></p>
+<h2 id="字数和阅读时间统计"><a href="#字数和阅读时间统计" class="headerlink" title="字数和阅读时间统计"></a>字数和阅读时间统计</h2><p><a href="https://github.com/theme-next/hexo-symbols-count-time" target="_blank" rel="noopener">https://github.com/theme-next/hexo-symbols-count-time</a></p>
+<h2 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明"></a>版权声明</h2><p>修改主题配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">creative_commons:</span><br><span class="line">  license: by-nc-sa</span><br><span class="line">  sidebar: false</span><br><span class="line">  post: true</span><br><span class="line">  language: zh-CN</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实不用查很多资料，Next 内部集成了很多功能，直接看 Hexo 配置文件和 Next 主题配置文件，看懂注释，一项项改最快。</p>
+<p>发现自己就喜欢折腾，不对，是不需要很多脑子的折腾。要是折腾看懂一篇cv论文，又不愿意了，哈哈哈。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">Hexo文档</a></li>
+<li><a href="https://github.com/theme-next/hexo-theme-next" target="_blank" rel="noopener">NexT</a></li>
+<li><a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">Next旧版中文文档</a></li>
+<li><a href="https://mxdzs0612.github.io/其它技术/2019-07-29-HexoBlog2.html" target="_blank" rel="noopener">使用hexo在github上搭建博客：主题篇</a></li>
+<li><a href="https://www.jianshu.com/p/9f0e90cc32c2" target="_blank" rel="noopener">Hexo-NexT配置超炫网页效果</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>paleomoon</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://paleomoon.github.io/2019/09/08/hexo-and-theme-next-update/" title="hexo-and-theme-next-update">https://paleomoon.github.io/2019/09/08/hexo-and-theme-next-update/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/github-pages/" rel="tag"># github pages</a>
+            
+              <a href="/tags/博客/" rel="tag"># 博客</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/09/06/darknet安卓移植/" rel="next" title="darknet安卓移植">
+                  <i class="fa fa-chevron-left"></i> darknet安卓移植
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  
+  <div class="comments">
+  <script src="https://utteranc.es/client.js" repo="paleomoon/paleomoon.github.io" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script>
+  </div>
+  
+  
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-以及-Next-主题升级"><span class="nav-number">1.</span> <span class="nav-text">Hexo 以及 Next 主题升级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Hexo"><span class="nav-number">1.1.</span> <span class="nav-text">安装Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Next主题"><span class="nav-number">1.2.</span> <span class="nav-text">安装Next主题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评论"><span class="nav-number">2.</span> <span class="nav-text">评论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Valine"><span class="nav-number">2.1.</span> <span class="nav-text">Valine</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#utterances"><span class="nav-number">2.2.</span> <span class="nav-text">utterances</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问统计"><span class="nav-number">3.</span> <span class="nav-text">访问统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#站内搜索"><span class="nav-number">4.</span> <span class="nav-text">站内搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字体"><span class="nav-number">5.</span> <span class="nav-text">字体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置动态背景"><span class="nav-number">6.</span> <span class="nav-text">设置动态背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字数和阅读时间统计"><span class="nav-number">7.</span> <span class="nav-text">字数和阅读时间统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版权声明"><span class="nav-number">8.</span> <span class="nav-text">版权声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">10.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/avatar.jpg"
+      alt="paleomoon">
+  <p class="site-author-name" itemprop="name">paleomoon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/paleomoon" title="GitHub &rarr; https://github.com/paleomoon" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:huge909@gmail.com" title="E-Mail &rarr; mailto:huge909@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paleomoon</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">52k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">48 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.0</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
