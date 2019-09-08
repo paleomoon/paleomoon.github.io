@@ -14,6 +14,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
   <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+  <meta name="google-site-verification" content="true">
+  <meta name="baidu-site-verification" content="true">
 
 <link rel="stylesheet" href="/css/main.css?v=7.4.0">
 
@@ -65,7 +67,7 @@
 <meta property="og:site_name" content="paleomoon&#39;s blog">
 <meta property="og:description" content="旧版Hexo博客已近建了两年多了，也没写几篇博客，最近想把一些笔记发表上来，旧版有些功能失效了，强迫症犯了想升级一下。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-08T09:44:08.388Z">
+<meta property="og:updated_time" content="2019-09-08T14:25:52.792Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo 以及 NexT 主题升级">
 <meta name="twitter:description" content="旧版Hexo博客已近建了两年多了，也没写几篇博客，最近想把一些笔记发表上来，旧版有些功能失效了，强迫症犯了想升级一下。">
@@ -289,7 +291,7 @@
                 
               
 
-              <time title="创建时间：2019-09-08 15:14:01 / 修改时间：17:44:08" itemprop="dateCreated datePublished" datetime="2019-09-08T15:14:01+08:00">2019-09-08</time>
+              <time title="创建时间：2019-09-08 15:14:01 / 修改时间：22:25:52" itemprop="dateCreated datePublished" datetime="2019-09-08T15:14:01+08:00">2019-09-08</time>
             </span>
           
             
@@ -327,7 +329,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>4.4k</span>
+              <span>3.5k</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -337,7 +339,7 @@
               
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               
-              <span>4 分钟</span>
+              <span>3 分钟</span>
             </span>
           
 
@@ -432,19 +434,6 @@
 <h2 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明"></a>版权声明</h2><p>修改主题配置文件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">creative_commons:</span><br><span class="line">  license: by-nc-sa</span><br><span class="line">  sidebar: false</span><br><span class="line">  post: true</span><br><span class="line">  language: zh-CN</span><br></pre></td></tr></table></figure>
 
-<h2 id="SEO优化"><a href="#SEO优化" class="headerlink" title="SEO优化"></a>SEO优化</h2><h3 id="添加站点地图"><a href="#添加站点地图" class="headerlink" title="添加站点地图"></a>添加站点地图</h3><p>需要安装两个插件来生成 sitemap 文件，前一个是传统的 sitemap，后一个是百度的 sitemap。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save</span><br><span class="line">npm install hexo-generator-baidu-sitemap --save</span><br></pre></td></tr></table></figure>
-
-<p>将<code>sitemap</code>文件添加到站点配置文件<code>_config.yml</code>中，并修改<code>url</code>字段的值，其值默认为<code>http://yoursite.com</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sitemap: </span><br><span class="line">  path: sitemap.xml</span><br><span class="line">baidusitemap:</span><br><span class="line">  path: baidusitemap.xml</span><br><span class="line"></span><br><span class="line">url: https://paleomoon.github.io</span><br></pre></td></tr></table></figure>
-
-<p>安装完成后执行<code>hexo g</code>即会在站点<code>public</code>目录下生成<code>sitemap.xml</code>和<code>baidusitemap.xml</code>。</p>
-<h3 id="添加蜘蛛协议"><a href="#添加蜘蛛协议" class="headerlink" title="添加蜘蛛协议"></a>添加蜘蛛协议</h3><p>在站点<code>source</code>文件夹下新建<code>robots.txt</code>文件，文件内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">User-agent: *</span><br><span class="line">Allow: /</span><br><span class="line">Allow: /archives/</span><br><span class="line">Allow: /categories/</span><br><span class="line">Allow: /tags/ </span><br><span class="line">Allow: /about/ </span><br><span class="line"></span><br><span class="line">Disallow: /vendors/</span><br><span class="line">Disallow: /js/</span><br><span class="line">Disallow: /css/</span><br><span class="line">Disallow: /fonts/</span><br><span class="line">Disallow: /vendors/</span><br><span class="line">Disallow: /fancybox/</span><br><span class="line"></span><br><span class="line">Sitemap: https://paleomoon.github.io/sitemap.xml</span><br><span class="line">Sitemap: https://paleomoon.github.io/baidusitemap.xml</span><br></pre></td></tr></table></figure>
-
-<p><code>Allow</code>字段的值即为允许搜索引擎爬区的内容，可以对应到主题配置文件中的menu目录配置，如果菜单栏还有其他选项都可以按照格式自行添加。</p>
-<h3 id="提交站点到-Google"><a href="#提交站点到-Google" class="headerlink" title="提交站点到 Google"></a>提交站点到 Google</h3><p>打开<a href="https://www.google.com/webmasters/" target="_blank" rel="noopener">Google Search Console</a>，添加博客地址。</p>
-<p>下载 google HTML文件，放在 source 目录。执行 <code>hexo clean &amp; hexo g -d</code></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实不用查很多资料，Next 内部集成了很多功能，直接看 Hexo 配置文件和 Next 主题配置文件，看懂注释，一项项改最快。</p>
 <p>发现自己就喜欢折腾，不对，是不需要很多脑子的折腾。要是折腾看懂一篇cv论文，又不愿意了，哈哈哈。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
@@ -523,6 +512,15 @@
 
           </div>
           
+    
+    
+  
+  <div class="comments">
+  <script src="https://utteranc.es/client.js" repo="paleomoon/paleomoon.github.io" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script>
+  </div>
+  
+  
+  
 
         </div>
           
@@ -554,7 +552,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-以及-NexT-主题升级"><span class="nav-number">1.</span> <span class="nav-text">Hexo 以及 NexT 主题升级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Hexo"><span class="nav-number">1.1.</span> <span class="nav-text">安装Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Next主题"><span class="nav-number">1.2.</span> <span class="nav-text">安装Next主题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评论"><span class="nav-number">2.</span> <span class="nav-text">评论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Valine"><span class="nav-number">2.1.</span> <span class="nav-text">Valine</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#utterances"><span class="nav-number">2.2.</span> <span class="nav-text">utterances</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问统计"><span class="nav-number">3.</span> <span class="nav-text">访问统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#站内搜索"><span class="nav-number">4.</span> <span class="nav-text">站内搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字体"><span class="nav-number">5.</span> <span class="nav-text">字体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置动态背景"><span class="nav-number">6.</span> <span class="nav-text">设置动态背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字数和阅读时间统计"><span class="nav-number">7.</span> <span class="nav-text">字数和阅读时间统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版权声明"><span class="nav-number">8.</span> <span class="nav-text">版权声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SEO优化"><span class="nav-number">9.</span> <span class="nav-text">SEO优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加站点地图"><span class="nav-number">9.1.</span> <span class="nav-text">添加站点地图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加蜘蛛协议"><span class="nav-number">9.2.</span> <span class="nav-text">添加蜘蛛协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提交站点到-Google"><span class="nav-number">9.3.</span> <span class="nav-text">提交站点到 Google</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">11.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-以及-NexT-主题升级"><span class="nav-number">1.</span> <span class="nav-text">Hexo 以及 NexT 主题升级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Hexo"><span class="nav-number">1.1.</span> <span class="nav-text">安装Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Next主题"><span class="nav-number">1.2.</span> <span class="nav-text">安装Next主题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评论"><span class="nav-number">2.</span> <span class="nav-text">评论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Valine"><span class="nav-number">2.1.</span> <span class="nav-text">Valine</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#utterances"><span class="nav-number">2.2.</span> <span class="nav-text">utterances</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问统计"><span class="nav-number">3.</span> <span class="nav-text">访问统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#站内搜索"><span class="nav-number">4.</span> <span class="nav-text">站内搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字体"><span class="nav-number">5.</span> <span class="nav-text">字体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置动态背景"><span class="nav-number">6.</span> <span class="nav-text">设置动态背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字数和阅读时间统计"><span class="nav-number">7.</span> <span class="nav-text">字数和阅读时间统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版权声明"><span class="nav-number">8.</span> <span class="nav-text">版权声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">10.</span> <span class="nav-text">参考</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -652,7 +650,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">53k</span>
+    <span title="站点总字数">52k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
