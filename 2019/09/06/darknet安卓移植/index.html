@@ -59,18 +59,18 @@
   };
 </script>
 
-  <meta name="description" content="项目使用的版本是老版darknet2ncnn，之后作者适配到了ncnn最新版。">
+  <meta name="description" content="darknet源码是纯c写的，移植到安卓是可行，可能速度不会很快。ncnn是主要用于移动端部署的深度学习前向传播框架，做了很多优化。我们可以将darknet转为ncnn部署在安卓上，项目使用的版本是老版darknet2ncnn，之后作者适配到了ncnn最新版。">
 <meta name="keywords" content="深度学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="darknet安卓移植">
 <meta property="og:url" content="https://paleomoon.github.io/2019/09/06/darknet安卓移植/index.html">
 <meta property="og:site_name" content="paleomoon&#39;s blog">
-<meta property="og:description" content="项目使用的版本是老版darknet2ncnn，之后作者适配到了ncnn最新版。">
+<meta property="og:description" content="darknet源码是纯c写的，移植到安卓是可行，可能速度不会很快。ncnn是主要用于移动端部署的深度学习前向传播框架，做了很多优化。我们可以将darknet转为ncnn部署在安卓上，项目使用的版本是老版darknet2ncnn，之后作者适配到了ncnn最新版。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-08T05:35:56.586Z">
+<meta property="og:updated_time" content="2019-09-27T04:22:56.272Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="darknet安卓移植">
-<meta name="twitter:description" content="项目使用的版本是老版darknet2ncnn，之后作者适配到了ncnn最新版。">
+<meta name="twitter:description" content="darknet源码是纯c写的，移植到安卓是可行，可能速度不会很快。ncnn是主要用于移动端部署的深度学习前向传播框架，做了很多优化。我们可以将darknet转为ncnn部署在安卓上，项目使用的版本是老版darknet2ncnn，之后作者适配到了ncnn最新版。">
   <link rel="canonical" href="https://paleomoon.github.io/2019/09/06/darknet安卓移植/">
 
 
@@ -302,7 +302,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-08 13:35:56" itemprop="dateModified" datetime="2019-09-08T13:35:56+08:00">2019-09-08</time>
+                <time title="修改时间：2019-09-27 12:22:56" itemprop="dateModified" datetime="2019-09-27T12:22:56+08:00">2019-09-27</time>
               </span>
             
           
@@ -337,7 +337,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>4.5k</span>
+              <span>5k</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -347,7 +347,7 @@
               
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               
-              <span>4 分钟</span>
+              <span>5 分钟</span>
             </span>
           
 
@@ -360,19 +360,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>项目使用的版本是<a href="https://github.com/xiangweizeng/darknet2ncnn/tree/72696c6efc3899d63463be2e9faf4e5b246569ff" target="_blank" rel="noopener">老版darknet2ncnn</a>，之后作者<a href="https://github.com/xiangweizeng/darknet2ncnn/" target="_blank" rel="noopener">适配到了ncnn最新版</a>。</p>
+        <p>darknet源码是纯c写的，移植到安卓是可行，可能速度不会很快。ncnn是主要用于移动端部署的深度学习前向传播框架，做了很多优化。我们可以将darknet转为ncnn部署在安卓上，项目使用的版本是<a href="https://github.com/xiangweizeng/darknet2ncnn/tree/72696c6efc3899d63463be2e9faf4e5b246569ff" target="_blank" rel="noopener">老版darknet2ncnn</a>，之后作者<a href="https://github.com/xiangweizeng/darknet2ncnn/" target="_blank" rel="noopener">适配到了ncnn最新版</a>。</p>
 <a id="more"></a>
 
-<h3 id="编译安卓版ncnn"><a href="#编译安卓版ncnn" class="headerlink" title="编译安卓版ncnn"></a>编译安卓版ncnn</h3><p>在linux下编译，查看官方教程即可。注意使用与android studio相同版本的ndk。设置android studio ndk：修改local.properties，ndk.dir=D:\softback\Android\android-ndk-r15c</p>
-<h3 id="添加相关源文件"><a href="#添加相关源文件" class="headerlink" title="添加相关源文件"></a>添加相关源文件</h3><p>将darknet、ncnn、darknet2ncnn相关源文件和头文件按目录添加到cpp目录下，目录结构如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">├─darknet</span><br><span class="line">│  ├─include</span><br><span class="line">│  └─src</span><br><span class="line">├─darknet2ncnn</span><br><span class="line">│  ├─include</span><br><span class="line">│  └─src</span><br><span class="line">└─ncnn</span><br><span class="line">    ├─include</span><br><span class="line">    └─src</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/paleomoon/darknet2ncnn-android" target="_blank" rel="noopener">本项目地址</a></p>
+<p>主要步骤：</p>
+<ol>
+<li>编译安卓版ncnn</li>
+<li>darknet转ncnn</li>
+<li>添加相关源码，编写cmakelist.txt，编译so</li>
+</ol>
+<h3 id="编译安卓版ncnn"><a href="#编译安卓版ncnn" class="headerlink" title="编译安卓版ncnn"></a>编译安卓版ncnn</h3><p>在linux上编译，查看ncnn官方教程即可。注意使用与android studio相同版本的ndk。（设置android studio ndk：修改local.properties，ndk.dir=D:\softback\Android\android-ndk-r15c）</p>
+<p>将编译好的libncnn.a添加到工程<code>src/main/jniLibs/armeabi-v7a/</code>目录。</p>
+<h3 id="darknet转ncnn"><a href="#darknet转ncnn" class="headerlink" title="darknet转ncnn"></a>darknet转ncnn</h3><p>在linux上编译darknet2ncnn，将darknet训练好的模型和权重转为ncnn可读取的param和bin文件，连同标签文件一起放到<code>src/mai/assets</code>目录下。</p>
+<h3 id="编译so"><a href="#编译so" class="headerlink" title="编译so"></a>编译so</h3><p>将darknet、ncnn、darknet2ncnn相关源文件和头文件按目录添加到<code>src/main/cpp</code>目录下，目录结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">├─cpp</span><br><span class="line">    ├─darknet</span><br><span class="line">    │  ├─include</span><br><span class="line">    │  └─src</span><br><span class="line">    ├─darknet2ncnn</span><br><span class="line">    │  ├─include</span><br><span class="line">    │  └─src</span><br><span class="line">    └─ncnn</span><br><span class="line">        ├─include</span><br><span class="line">        └─src</span><br></pre></td></tr></table></figure>
 
-<p>darknet源码报错：<code>compare.c:17:13 error: initializing &#39;network&#39; (aka &#39;struct network&#39;) with an expression of incompatible type &#39;network *&#39; (aka &#39;struct network *&#39;); dereference with *.</code>修改compare.c，多处对应的指针类型和引用改一下就OK。</p>
-<p>在darknet和darknet2ncnn package下new package，添加相关源码，但编译后android studio中该源码目录会显示在cpp目录下，不清楚啥原因，不过不影响编译。</p>
-<h3 id="编写Cmakelists-txt"><a href="#编写Cmakelists-txt" class="headerlink" title="编写Cmakelists.txt"></a>编写Cmakelists.txt</h3><p>这个是重点，很多问题就是没有写好Cmakelists.txt引起的。</p>
+<p>在darknet和darknet2ncnn package下new package，添加相关源码，但编译后android studio中该源码目录会显示在cpp目录下，只是显示问题，没啥影响，应该是AS的bug。</p>
+<p><code>src/main/cpp</code>目录下添加yolov3-tiny-jni.cpp文件。</p>
+<p>编写Cmakelists.txt，这个是重点，很多问题就是没有写好Cmakelists.txt引起的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION 2.8.10)</span><br><span class="line"></span><br><span class="line">set(CMAKE_BUILD_TYPE RELEASE)</span><br><span class="line"></span><br><span class="line">set(libs &quot;$&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs&quot;)</span><br><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/darknet2ncnn/include</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/ncnn/include</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/darknet/include</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/darknet2ncnn/src</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/ncnn/src)</span><br><span class="line"></span><br><span class="line">set(CMAKE_STATIC_LINKER_FLAGS &quot;-lm  -pthread -fopenmp -lstdc++&quot;)</span><br><span class="line">set(CMAKE_C_FLAGS  &quot;$&#123;CMAKE_C_FLAGS&#125; -Ofast -Wno-unused-result  -Wfatal-errors -fPIC -fno-rtti -fno-exceptions&quot;)</span><br><span class="line">set(CMAKE_CXX_FLAGS  &quot;$&#123;CMAKE_CXX_FLAGS&#125; -std=c++11 -Ofast -Wno-unused-result  -Wfatal-errors -fPIC -fno-rtti -fno-exceptions&quot;)</span><br><span class="line"></span><br><span class="line">add_library (libncnn STATIC IMPORTED)</span><br><span class="line">set_target_properties(libncnn PROPERTIES IMPORTED_LOCATION $&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs/armeabi-v7a/libncnn.a)</span><br><span class="line"></span><br><span class="line">file(GLOB_RECURSE darknet_src $&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/darknet/src/*.c)</span><br><span class="line"></span><br><span class="line">set(darknet2ncnn_dir $&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/darknet2ncnn/src)</span><br><span class="line">set(darknet2ncnn_src $&#123;darknet2ncnn_dir&#125;/layer/darknet_activation.cpp</span><br><span class="line">    $&#123;darknet2ncnn_dir&#125;/layer/darknet_shortcut.cpp</span><br><span class="line">    $&#123;darknet2ncnn_dir&#125;/layer/yolov1_detection.cpp</span><br><span class="line">    $&#123;darknet2ncnn_dir&#125;/layer/yolov3_detection.cpp</span><br><span class="line">    $&#123;darknet2ncnn_dir&#125;/object_detection.cpp</span><br><span class="line">    $&#123;darknet2ncnn_dir&#125;/register_darknet.cpp</span><br><span class="line">    $&#123;darknet2ncnn_dir&#125;/darknet2ncnn.cpp)</span><br><span class="line"></span><br><span class="line">set(ncnn_src $&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/ncnn/src)</span><br><span class="line"></span><br><span class="line">set(lib_src $&#123;darknet_src&#125; $&#123;darknet2ncnn_src&#125; $&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/yolov3-tiny-jni.cpp)</span><br><span class="line"></span><br><span class="line">add_library( # Sets the name of the library.</span><br><span class="line">        yolov3_tiny_jni</span><br><span class="line"></span><br><span class="line">        # Sets the library as a shared library.</span><br><span class="line">        SHARED</span><br><span class="line"></span><br><span class="line">        # Provides a relative path to your source file(s).</span><br><span class="line">        $&#123;lib_src&#125;)</span><br><span class="line"></span><br><span class="line">find_library( # Sets the name of the path variable.</span><br><span class="line">        log-lib</span><br><span class="line"></span><br><span class="line">        # Specifies the name of the NDK library that</span><br><span class="line">        # you want CMake to locate.</span><br><span class="line">        log)</span><br><span class="line"></span><br><span class="line">target_link_libraries( # Specifies the target library.</span><br><span class="line">        yolov3_tiny_jni</span><br><span class="line">        libncnn</span><br><span class="line">        jnigraphics</span><br><span class="line"></span><br><span class="line">        # Links the target library to the log library</span><br><span class="line">        # included in the NDK.</span><br><span class="line">        $&#123;log-lib&#125;)</span><br></pre></td></tr></table></figure>
 
-<h3 id="错误解决"><a href="#错误解决" class="headerlink" title="错误解决"></a>错误解决</h3><p>报错：undefined reference to ‘typeinfo for ncnn::Layer’，这个在arm-linux交叉编译时遇到过，添加-fno-rtti编译选项即可。</p>
+<p>build应该就可以生成yolov3-tiny-jni.so了，然后就可以在java代码中调用接口进行检测。</p>
+<h3 id="错误解决"><a href="#错误解决" class="headerlink" title="错误解决"></a>错误解决</h3><p>darknet源码报错：<code>compare.c:17:13 error: initializing &#39;network&#39; (aka &#39;struct network&#39;) with an expression of incompatible type &#39;network *&#39; (aka &#39;struct network *&#39;); dereference with *.</code>修改compare.c，多处对应的指针类型和引用改一下就OK。</p>
+<p>报错：undefined reference to ‘typeinfo for ncnn::Layer’，这个在arm-linux交叉编译时遇到过，添加-fno-rtti编译选项即可。</p>
 <p>报错：fatal error: use of undeclared identifier ‘nullptr’，添加-std=c++11编译选项即可。</p>
 <p>make project编译成功，so生成位置：app\build\intermediates\cmake\debug\obj\armeabi-v7a\</p>
 <p>build apk报错：Cause: org.jetbrains.plugins.gradle.tooling.util.ModuleComponentIdentifierImpl.getModuleIdentifier()Lorg/gradle/api/artifacts/ModuleIdentifier; 更新android studio即可.</p>
@@ -380,9 +391,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">private String getPathFromAssets(String assetsFileName)&#123;</span><br><span class="line">    File f = new File(getCacheDir()+&quot;/&quot;+assetsFileName);</span><br><span class="line">    if (!f.exists())</span><br><span class="line">        try &#123;</span><br><span class="line">        InputStream is = getAssets().open(assetsFileName);</span><br><span class="line">        int size = is.available();</span><br><span class="line">        byte[] buffer = new byte[size];</span><br><span class="line">        is.read(buffer);</span><br><span class="line">        is.close();</span><br><span class="line">        FileOutputStream fos = new FileOutputStream(f);</span><br><span class="line">        fos.write(buffer);</span><br><span class="line">        fos.close();</span><br><span class="line">    &#125; catch (Exception e) &#123; throw new RuntimeException(e); &#125;</span><br><span class="line">    return f.getPath();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>之前的模型已经加载到缓存中了，后来我更换过一次模型，但是缓存没删除，还是之前的模型，所以一直检测不到目标，将<code>if (!f.exists())</code>注释掉，每次初始化都重新写入缓存，最后成功检测到目标。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其实也比较简单，主要就写了个Cmakelists.txt。参考以下两项目，感谢作者大佬。</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/yuace/yolov2-Tiny-NCNN-Android-demo" target="_blank" rel="noopener">安卓应用层</a></p>
-<p><a href="https://github.com/xiangweizeng/darknet2ncnn/" target="_blank" rel="noopener">darknet2ncnn</a></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>经测验，在骁龙625上400ms左右，速度还是可以的。</p>
+<p>其实也比较简单，主要就写了个Cmakelists.txt。参考以下两项目，感谢作者大佬。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/xiangweizeng/darknet2ncnn/" target="_blank" rel="noopener">darknet2ncnn</a></p>
+<p><a href="https://github.com/yuace/yolov2-Tiny-NCNN-Android-demo" target="_blank" rel="noopener">安卓demo</a></p>
 
     </div>
 
@@ -494,7 +506,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译安卓版ncnn"><span class="nav-number">1.</span> <span class="nav-text">编译安卓版ncnn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加相关源文件"><span class="nav-number">2.</span> <span class="nav-text">添加相关源文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写Cmakelists-txt"><span class="nav-number">3.</span> <span class="nav-text">编写Cmakelists.txt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误解决"><span class="nav-number">4.</span> <span class="nav-text">错误解决</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译安卓版ncnn"><span class="nav-number">1.</span> <span class="nav-text">编译安卓版ncnn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#darknet转ncnn"><span class="nav-number">2.</span> <span class="nav-text">darknet转ncnn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译so"><span class="nav-number">3.</span> <span class="nav-text">编译so</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误解决"><span class="nav-number">4.</span> <span class="nav-text">错误解决</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -592,7 +604,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">52k</span>
+    <span title="站点总字数">53k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
