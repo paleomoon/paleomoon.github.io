@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://paleomoon.github.io/about/index.html</loc>
+    
+    <lastmod>2019-09-27T04:29:13.927Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://paleomoon.github.io/2019/09/06/darknet%E5%AE%89%E5%8D%93%E7%A7%BB%E6%A4%8D/</loc>
     
     <lastmod>2019-09-27T04:26:19.300Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>https://paleomoon.github.io/2017/02/26/github-pages-hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</loc>
     
     <lastmod>2019-09-08T07:15:13.401Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://paleomoon.github.io/about/index.html</loc>
-    
-    <lastmod>2019-09-07T12:54:49.991Z</lastmod>
     
   </url>
   
